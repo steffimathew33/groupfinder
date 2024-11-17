@@ -42,7 +42,7 @@ testingRoutes.route("/testing").post(async(request, response) => {
     let db = database.getDb()
     let mongoObj = {
         name: request.body.name,
-        emails: request.body.email,
+        email: request.body.email,
         movie_id: request.body.runtime,
         text: request.body.text,
         date: request.body.date
@@ -59,7 +59,7 @@ testingRoutes.route("/testing/:id").put(async(request, response) => {
     let mongoObj = {
         $set: {
             name: request.body.name,
-            emails: request.body.email,
+            email: request.body.email,
             movie_id: request.body.runtime,
             text: request.body.text,
             date: request.body.date

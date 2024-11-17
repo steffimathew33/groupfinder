@@ -1,27 +1,36 @@
 // import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react'
+import { getTests, getTest, createTests, updateTests, deleteTests } from './api';
 
 function App() {
+
+  const [data, setData] = useState()
+
+    function updateUser() {
+      let postObject = {
+        name: "Katie Dinh",
+        email: "ikatiedinh@gmail.com",
+        text: "update",
+        date: new Date()
+      }
+
+      updateTests("6739559ba1f13899db8cd84c", postObject)
+    }
+  /*useEffect(() => {
+    async function loadAllTests() {
+      let data = await getTests()
+      if (data) {
+        setData(data)
+      }
+    }
+
+    loadAllTests()
+  }, [])*/ //Empty dependency array means this only runs on first launch.
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>welcome to our groupfinder lol</p>
-        {/*
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        */}
-      </header>
-    </div>
+    <>
+      <button onClick={updateUser}>Update User</button>
+    </>
   );
 }
 
