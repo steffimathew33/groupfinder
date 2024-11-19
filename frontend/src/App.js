@@ -26,7 +26,12 @@ function App() {
     }
 
     loadAllTests()
-  }, [])*/ //Empty dependency array means this only runs on first launch.
+  }, [])*/ //Empty dependency array means this only runs on first launch
+
+
+
+  
+
   return (
     <>
       <button onClick={updateUser}>Update User</button>
