@@ -43,18 +43,27 @@ userRoutes.route("/users2/:id").get(async(request, response) => {
 userRoutes.route("/users2").post(async(request, response) => {
     let db = database.getDb()
 
-    const hash = await bcrypt.hash(request.body.password, SALT_ROUNDS);
+    const emailTaken = await db.collection("users2").findOne({email: request.body.email})
+    console.log(emailTaken);
+    
+    if (emailTaken) {
+        response.json({message: "This email is taken."})
+        response.status(400)
+    } else {
+        const hash = await bcrypt.hash(request.body.password, SALT_ROUNDS);
 
-    let mongoObj = {
-        name: request.body.name,
-        email: request.body.email,
-        password: hash,
-        joinDate: new Date(),
-        //major: request.body.major
+        let mongoObj = {
+            name: request.body.name,
+            email: request.body.email,
+            password: hash,
+            joinDate: new Date(),
+            //major: request.body.major
+        }
+         data = await db.collection("users2").insertOne(mongoObj)
+
+        response.json(data) //For consistency
     }
-    let data = await db.collection("users2").insertOne(mongoObj)
-
-    response.json(data) //For consistency
+    
     
 })
 
