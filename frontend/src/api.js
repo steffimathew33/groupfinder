@@ -43,7 +43,7 @@ export async function deleteTests(id) {
 //USER FUNCTIONALITY
 
 export async function getAllUsers() {
-    const response = await axios.get(`${URL}/users`)
+    const response = await axios.get(`${URL}/users2`)
 
     if (response.status === 200) {
         return response.data
@@ -53,7 +53,7 @@ export async function getAllUsers() {
 }
 
 export async function getUser(id) {
-    const response = await axios.get(`${URL}/users/${id}`)
+    const response = await axios.get(`${URL}/users2/${id}`)
 
     if (response.status === 200) {
         return response.data
@@ -63,13 +63,13 @@ export async function getUser(id) {
 }
 
 export async function createUser(newUser) {
-    const response = await axios.post(`${URL}/users`, newUser)
+    const response = await axios.post(`${URL}/users2`, newUser)
 
     return response
 }
 
 export async function updateUser(id, updatedUser) {
-    const response = await axios.put(`${URL}/users/${id}`, updatedUser)
+    const response = await axios.put(`${URL}/users2/${id}`, updatedUser)
 
     return response
 }
