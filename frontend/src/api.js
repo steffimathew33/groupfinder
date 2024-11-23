@@ -80,6 +80,6 @@ export async function verifyUser(user) {
     if (response.data.success) {
         return response.data.user;
     } else {
-        throw new Error(response.statusText);
+        return
     }
 }

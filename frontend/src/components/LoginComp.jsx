@@ -1,5 +1,6 @@
 import { verifyUser } from "../api"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 export function LoginUser() {
 
@@ -8,6 +9,8 @@ export function LoginUser() {
         password: ""
     })
 
+    const navigate = useNavigate()
+
     function handleChange(e) {
         setUser({...user, [e.target.name]: e.target.value})
     }
@@ -15,7 +18,12 @@ export function LoginUser() {
     async function handleSubmit(e) {
         e.preventDefault()
         let response = await verifyUser(user);
-        console.log(response)
+        if (response) {
+            navigate("/home")
+        } else {
+            alert("Login failed.")
+        }
+            
     }
 
     return (
