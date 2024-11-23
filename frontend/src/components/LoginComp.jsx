@@ -20,6 +20,8 @@ export function LoginUser() {
         let response = await verifyUser(user);
         if (response) {
             navigate("/home")
+            sessionStorage.setItem("User", response); //Set user = jsonwebtoken in session storage (found in Inspect element)
+
         } else {
             alert("Login failed.")
         }

@@ -3,6 +3,8 @@ const express = require("express");
 const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a ObjectId data type
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config({path: "./config.env"});
 
 let userRoutes = express.Router();
 const SALT_ROUNDS = 6;
@@ -102,7 +104,9 @@ userRoutes.route("/users2/login").post(async(request, response) => {
     if (user) {
         let checkPassword = await bcrypt.compare(request.body.password, user.password);
         if (checkPassword) {
-            response.json({success: true, user})
+            const token = jwt.sign(user, process.env.SECRETKEY, {expiresIn: "1h"}); //Encode user data into a jsonwebtoken for page authentication
+                                                                                    //process.env.SECRETKEY is stored in config.env.
+            response.json({success: true, token})
         } else {
             response.json({success: false, message: "Incorrect Password."})
         }
