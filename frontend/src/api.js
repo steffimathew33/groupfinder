@@ -73,3 +73,13 @@ export async function updateUser(id, updatedUser) {
 
     return response
 }
+
+export async function verifyUser(user) {
+    const response = await axios.post(`${URL}/users2/login`, user);
+    console.log(response)
+    if (response.data.success) {
+        return response.data.user;
+    } else {
+        throw new Error(response.statusText);
+    }
+}

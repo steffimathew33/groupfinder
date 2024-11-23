@@ -44,8 +44,7 @@ userRoutes.route("/users2").post(async(request, response) => {
     let db = database.getDb()
 
     const emailTaken = await db.collection("users2").findOne({email: request.body.email})
-    console.log(emailTaken);
-    
+
     if (emailTaken) {
         response.json({message: "This email is taken."})
         response.status(400)
@@ -91,6 +90,28 @@ userRoutes.route("/users2/:id").delete(async(request, response) => {
     let db = database.getDb()
     let data = await db.collection("users2").deleteOne({_id: new ObjectId(request.params.id)}) 
     response.json(data);
+})
+
+//Login Route
+userRoutes.route("/users2/login").post(async(request, response) => {
+    let db = database.getDb()
+
+    //Find the email, then check passwords
+    const user = await db.collection("users2").findOne({email: request.body.email})
+
+    if (user) {
+        let checkPassword = await bcrypt.compare(request.body.password, user.password);
+        if (checkPassword) {
+            response.json({success: true, user})
+        } else {
+            response.json({success: false, message: "Incorrect Password."})
+        }
+    } else {
+        response.json({success: false, message: "User not found."})
+    }
+    
+    
+    
 })
 
 module.exports = userRoutes;
