@@ -12,12 +12,12 @@ const SALT_ROUNDS = 6;
 //Main route operations: Retrieve All, Retrieve One, Create one, update one, delete one (CRUD)
 
 //#1 Retrieve All
-//creates route = http://localhost:3000/users2
+//creates route = http://localhost:3000/users
 //await require async function: wait till database is finished collecting from Mongo completely
-userRoutes.route("/users2").get(async(request, response) => {
+userRoutes.route("/users").get(async(request, response) => {
     let db = database.getDb()
     //Mongo returns an object called 'Mongo Cursor' -> turn into array
-    let data = await db.collection("users2").find({}).toArray() //return everything in the collection if no parameter for find
+    let data = await db.collection("users").find({}).toArray() //return everything in the collection if no parameter for find
 
     if (data.length > 0) {
         response.json(data); //return to frontend
@@ -28,10 +28,10 @@ userRoutes.route("/users2").get(async(request, response) => {
 
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
-userRoutes.route("/users2/:id").get(async(request, response) => {
+userRoutes.route("/users/:id").get(async(request, response) => {
     let db = database.getDb()
     //findOne returns an object, not a Cursor
-    let data = await db.collection("users2").findOne({_id: new ObjectId(request.params.id)}) //Match the param in the route
+    let data = await db.collection("users").findOne({_id: new ObjectId(request.params.id)}) //Match the param in the route
 
     //Checking how many properties (keys) are in the data object returned from findOne
     if (Object.keys(data).length > 0) {
@@ -42,10 +42,10 @@ userRoutes.route("/users2/:id").get(async(request, response) => {
 })
 
 //#3 Create one, same route name is acceptable if the http method differs
-userRoutes.route("/users2").post(async(request, response) => {
+userRoutes.route("/users").post(async(request, response) => {
     let db = database.getDb()
 
-    const emailTaken = await db.collection("users2").findOne({email: request.body.email})
+    const emailTaken = await db.collection("users").findOne({email: request.body.email})
 
     if (emailTaken) {
         response.status(400)
@@ -55,13 +55,17 @@ userRoutes.route("/users2").post(async(request, response) => {
         const hash = await bcrypt.hash(request.body.password, SALT_ROUNDS);
 
         let mongoObj = {
-            name: request.body.name,
             email: request.body.email,
             password: hash,
-            joinDate: new Date(),
-            //major: request.body.major
+            firstName: request.body.firstName,
+            lastName: request.body.lastName,
+            major: request.body.major,
+            gradYear: request.body.gradYear,
+            profilePicture: request.body.profilePicture,
+            bio: request.body.bio,
+            signupDate: new Date()
         }
-         data = await db.collection("users2").insertOne(mongoObj)
+         data = await db.collection("users").insertOne(mongoObj)
 
         response.json(data) //For consistency
     }
@@ -70,37 +74,40 @@ userRoutes.route("/users2").post(async(request, response) => {
 })
 
 //#4 Update one
-userRoutes.route("/users2/:id").put(async(request, response) => {
+userRoutes.route("/users/:id").put(async(request, response) => {
     let db = database.getDb()
     let mongoObj = {
         $set: {
-            name: request.body.name,
             email: request.body.email,
             password: request.body.password,
-            joinDate: request.body.joinDate,
-            //major: request.body.major
+            firstName: request.body.firstName,
+            lastName: request.body.lastName,
+            major: request.body.major,
+            gradYear: request.body.gradYear,
+            profilePicture: request.body.profilePicture,
+            bio: request.body.bio,
+            signupDate: request.body.signupDate
         }
-        
     }
-    let data = await db.collection("users2").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)
+    let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)
 
     response.json(data)
     
 })
 
 //#5 Delete One
-userRoutes.route("/users2/:id").delete(async(request, response) => {
+userRoutes.route("/users/:id").delete(async(request, response) => {
     let db = database.getDb()
-    let data = await db.collection("users2").deleteOne({_id: new ObjectId(request.params.id)}) 
+    let data = await db.collection("users").deleteOne({_id: new ObjectId(request.params.id)}) 
     response.json(data);
 })
 
 //Login Route
-userRoutes.route("/users2/login").post(async(request, response) => {
+userRoutes.route("/users/login").post(async(request, response) => {
     let db = database.getDb()
 
     //Find the email, then check passwords
-    const user = await db.collection("users2").findOne({email: request.body.email})
+    const user = await db.collection("users").findOne({email: request.body.email})
 
     if (user) {
         let checkPassword = await bcrypt.compare(request.body.password, user.password);

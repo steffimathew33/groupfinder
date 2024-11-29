@@ -14,7 +14,7 @@ let database
 
 module.exports = {
     connectToServer: () => {
-        database = client.db("sample_mflix");
+        database = client.db("groupfinder");
     },
     getDb: () => {
         return database;
