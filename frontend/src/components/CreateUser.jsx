@@ -4,7 +4,8 @@ import { useState } from "react"
 export function CreateUser() {
 
     const [user, setUser] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: ""
     })
@@ -42,7 +43,8 @@ export function CreateUser() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input placeholder={"Name"} onChange={handleChange} name="name" required maxLength={20}/>
+            <input placeholder={"First Name"} onChange={handleChange} name="firstName" required maxLength={20}/>
+            <input placeholder={"Last Name"} onChange={handleChange} name="lastName" required maxLength={20}/>
             <input placeholder={"Email"} onChange={handleChange} name="email" required maxLength={40}/>
             <input placeholder={"Password"} onChange={handleChange} name="password" type="password" required maxLength={20}/>
             <button type="submit">Create Account</button>

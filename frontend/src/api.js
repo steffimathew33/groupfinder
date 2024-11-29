@@ -43,7 +43,7 @@ export async function deleteTests(id) {
 //USER FUNCTIONALITY
 
 export async function getAllUsers() {
-    const response = await axios.get(`${URL}/users2`)
+    const response = await axios.get(`${URL}/users`)
 
     if (response.status === 200) {
         return response.data
@@ -53,7 +53,7 @@ export async function getAllUsers() {
 }
 
 export async function getUser(id) {
-    const response = await axios.get(`${URL}/users2/${id}`)
+    const response = await axios.get(`${URL}/users/${id}`)
 
     if (response.status === 200) {
         return response.data
@@ -63,19 +63,19 @@ export async function getUser(id) {
 }
 
 export async function createUser(newUser) {
-    const response = await axios.post(`${URL}/users2`, newUser)
+    const response = await axios.post(`${URL}/users`, newUser)
 
     return response
 }
 
 export async function updateUser(id, updatedUser) {
-    const response = await axios.put(`${URL}/users2/${id}`, updatedUser)
+    const response = await axios.put(`${URL}/users/${id}`, updatedUser)
 
     return response
 }
 
 export async function verifyUser(user) {
-    const response = await axios.post(`${URL}/users2/login`, user);
+    const response = await axios.post(`${URL}/users/login`, user);
     console.log(response)
     if (response.data.success) {
         return response.data.token;
