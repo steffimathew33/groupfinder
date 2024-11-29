@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar{
+  position: fixed;
+  top: 0;
+  width: 50%;
+  left: 25%; 
+  display: flex;
+  justify-content: space-between;
+}
+
+.navItem{
+  padding: 4px;
+  margin: 4px;
+  color: white;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 4px;
+
+}
