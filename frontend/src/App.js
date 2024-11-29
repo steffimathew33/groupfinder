@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-//import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 //import { getTests, getTest, createTests, updateTests, deleteTests } from './api';
 //pages
 
@@ -12,8 +12,17 @@ import { Profile } from './pages/Profile'
 //navbar and layout 
 import { Navbar } from './components/Navbar';
 import { Layout } from './components/Layout';
+import axios from 'axios';
 
 function App() {
+
+//Maintain authorization even after refreshing of a page. Session storage persists through refreshes
+  useEffect(() => {
+    let token = sessionStorage.getItem("User");
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+    }
+  }, [])
 
   // const [data, setData] = useState()
 

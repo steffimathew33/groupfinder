@@ -1,6 +1,7 @@
 import { verifyUser } from "../api"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 export function LoginUser() {
 
@@ -19,8 +20,11 @@ export function LoginUser() {
         e.preventDefault()
         let response = await verifyUser(user);
         if (response) {
-            navigate("/home")
-            sessionStorage.setItem("User", response); //Set user = jsonwebtoken in session storage (found in Inspect element)
+            sessionStorage.setItem("User", response); //Set user = jsonwebtoken in session storage (found in Inspect element
+            //Add a default Authorization field to every axios request made to backend
+            //Once this is set, every request made by Axios will automatically include this token in the Authorization header
+            axios.defaults.headers.common["Authorization"] = `Bearer ${response}` //Bearer is a formatting norm.
+            navigate("/home");
 
         } else {
             alert("Login failed.")
