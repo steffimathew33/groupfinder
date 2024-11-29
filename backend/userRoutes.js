@@ -48,8 +48,9 @@ userRoutes.route("/users2").post(async(request, response) => {
     const emailTaken = await db.collection("users2").findOne({email: request.body.email})
 
     if (emailTaken) {
-        response.json({message: "This email is taken."})
         response.status(400)
+        response.json({message: "This email is taken."})
+        
     } else {
         const hash = await bcrypt.hash(request.body.password, SALT_ROUNDS);
 
