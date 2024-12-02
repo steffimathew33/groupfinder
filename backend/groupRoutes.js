@@ -1,7 +1,7 @@
 const express = require("express");
 const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a ObjectId data type
-const jwt = require('jsonwebtoken');
+const { verifyToken } = require('./auth');
 require("dotenv").config({path: "./config.env"});
 
 let groupRoutes = express.Router();
@@ -86,30 +86,6 @@ groupRoutes.route("/groups/:id").delete(verifyToken, async(request, response) =>
     response.json(data);
 })
 
-function verifyToken(request, response, next) {
-    const authentication = request.headers["Authorization"];
-    if (!authentication) {
-        return response.status(401).json({message: "Not logged in."});
-    }
-
-    const token = authentication.split(" ")[1] //Bearer 12345 (splits by space and get second item)
-
-    if (!token) {
-        // If there's no token after "Bearer", return an error
-        return response.status(401).json({ message: "Token missing." });
-    }
-
-    //Compare token with our secret key. If it's valid, return the user. If it's not, return error.
-    jwt.verify(token, process.env.SECRETKEY, (error, user) => {
-        if (error) {
-            return response.status(403).json({message: "Invalid token."});
-        }
-
-        request.user = user;
-        next(); //proceed to next step. aka the rest of the backend function.
-    });
-        
-}
 
 //Add to the requests DB when someone sends a request to someone else
 groupRoutes.route("/groups/:groupId/sendRequest").post(async (request, response) => {

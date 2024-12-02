@@ -4,6 +4,7 @@ const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a ObjectId data type
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { verifyToken } = require('./auth');
 require("dotenv").config({path: "./config.env"});
 
 let userRoutes = express.Router();
@@ -28,7 +29,7 @@ userRoutes.route("/users").get(async(request, response) => {
 
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
-userRoutes.route("/users/:id").get(async(request, response) => {
+userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
     let db = database.getDb()
     //findOne returns an object, not a Cursor
     let data = await db.collection("users").findOne({_id: new ObjectId(request.params.id)}) //Match the param in the route
@@ -128,28 +129,4 @@ userRoutes.route("/users/login").post(async(request, response) => {
     
 })
 
-function verifyToken(request, response, next) {
-    const authentication = request.headers["Authorization"];
-    if (!authentication) {
-        return response.status(401).json({message: "Not logged in."});
-    }
-
-    const token = authentication.split(" ")[1] //Bearer 12345 (splits by space and get second item)
-
-    if (!token) {
-        // If there's no token after "Bearer", return an error
-        return response.status(401).json({ message: "Token missing." });
-    }
-
-    //Compare token with our secret key. If it's valid, return the user. If it's not, return error.
-    jwt.verify(token, process.env.SECRETKEY, (error, user) => {
-        if (error) {
-            return response.status(403).json({message: "Invalid token."});
-        }
-
-        request.user = user;
-        next(); //proceed to next step. aka the rest of the backend function.
-    });
-        
-}
 module.exports = userRoutes;
