@@ -33,23 +33,23 @@ export function LoginUser() {
     }
 
     return (
-        <div className="login-container">
-        <div className="login-input">
-            <div className="login-title">
-                <h1>Login</h1>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div className="login-email">
-                    <input placeholder={"Email"} onChange={handleChange} name="email" required maxLength={40}/>
+        <div className="login-page-container">
+            <div className="login-input">
+                <div className="login-title">
+                    <h1>Login</h1>
                 </div>
-                <div className="login-password">
-                    <input placeholder={"Password"} onChange={handleChange} name="password" type="password" required maxLength={20}/>
-                    <div className="login-button">
-                    <button type="submit">Login</button>
+                <form onSubmit={handleSubmit}>
+                    <div className="login-email">
+                        <input placeholder={"Email"} onChange={handleChange} name="email" required maxLength={40}/>
                     </div>
-                </div>
-            </form>
-        </div>
+                    <div className="login-password">
+                        <input placeholder={"Password"} onChange={handleChange} name="password" type="password" required maxLength={20}/>
+                        <div className="login-button">
+                            <button type="submit">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

@@ -1,0 +1,42 @@
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #AAD4FF; /* Light blue background */
+    color: #000000; /* Black text */
+}
+
+button {
+    background-color: #FFD700; /* Golden button */
+    color: #000000; /* Black text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #5BAAFD; /* Light blue hover effect */
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #062C81; /* Dark blue */
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #062C81; /* Dark blue text for the name */
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #555; /* Slightly dark gray for text */
+    margin: 5px 0;
+}
