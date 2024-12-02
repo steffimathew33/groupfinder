@@ -6,7 +6,7 @@ export function Profile() {
     const [error, setError] = useState(null); // To handle any errors
 
     // You can dynamically fetch the user ID if you store it elsewhere (e.g., from auth context or session)
-    const userId = "674d279f6cd14f104827aa7c"; // Katie Dinh's user ID from the MongoDB screenshot
+    const userId = "674d39026b8894d40619ed41"; // Steffi Mathew's user ID from the MongoDB screenshot
 
     useEffect(() => {
         async function fetchUserData() {
