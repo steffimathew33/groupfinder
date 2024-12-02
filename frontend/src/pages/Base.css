@@ -3,12 +3,12 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #AAD4FF; /* Light blue background */
+    background-color: #8BB8E8; /* Light blue background */
     color: #000000; /* Black text */
 }
 
 button {
-    background-color: #FFD700; /* Golden button */
+    background-color: #FFD100; /* Golden button */
     color: #000000; /* Black text */
     border: none;
     padding: 10px 20px;
@@ -19,19 +19,19 @@ button {
 }
 
 button:hover {
-    background-color: #5BAAFD; /* Light blue hover effect */
+    background-color: #DAEBFE; /* Light blue hover effect */
 }
 
 h1 {
     font-size: 2.5rem;
-    color: #062C81; /* Dark blue */
+    color: #003B5C; /* Dark blue */
     margin-bottom: 20px;
     font-weight: 700;
 }
 
 h2 {
     font-size: 1.8rem;
-    color: #062C81; /* Dark blue text for the name */
+    color: #003B5C; /* Dark blue text for the name */
     margin-bottom: 10px;
 }
 
