@@ -127,3 +127,13 @@ export async function sendGroupRequest(groupId, requestData) {
 
     return response;
 }
+
+export async function getAllRequests() {
+    const response = await axios.get(`${URL}/requests`)
+
+    if (response.status === 200) {
+        return response.data
+    } else {
+        return
+    }
+}
