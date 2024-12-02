@@ -1,0 +1,113 @@
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #AAD4FF; /* Light blue background */
+    color: #000000; /* Black text */
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #AAD4FF;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #062C81; /* Dark blue */
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.profile-details {
+    background-color: #FFFFFF; /* White background for the profile */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    border: 4px solid #465BDA; /* Blue border around the image */
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #062C81; /* Dark blue text for the name */
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #555; /* Slightly dark gray for text */
+    margin: 5px 0;
+}
+
+/* Buttons */
+button {
+    background-color: #FFD700; /* Golden button */
+    color: #000000; /* Black text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #5BAAFD; /* Light blue hover effect */
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    
+    color: #FFFFFF;
+}
+
+.navbar button {
+    color: #FFFFFF; /* White text for navbar buttons */
+}
+
+.navbar button:hover {
+    background-color: #062C81; /* Darker blue for hover effect */
+}
+
+@media (max-width: 600px) {
+    .profile-container {
+        padding: 10px;
+    }
+
+    .profile-details {
+        width: 100%;
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+}
