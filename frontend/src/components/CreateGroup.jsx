@@ -4,13 +4,13 @@ import { useState } from "react"
 export function CreateGroup() {
 
     const [group, setGroup] = useState({
-        groupName: "",       // Group name field
-        description: "",     // Description of the group
-        createdBy: "",       // User ID or name of the creator (if needed for display)
-        projectTitle: "",    // Project title
-        tags: [],            // Tags, can be a comma-separated string or array
+        groupName: "",
+        description: "",
+        createdBy: "",
+        projectTitle: "",
+        tags: [],
         maxPeople: "",
-        isFull: false        // Boolean to indicate if the group is full (default false)
+        isFull: false
     });
 
     const handleChange = (e) => {

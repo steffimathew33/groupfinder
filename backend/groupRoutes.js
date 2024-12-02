@@ -1,5 +1,4 @@
 const express = require("express");
-//Database is now defined because in server.js, we ran connectToServer function, can now use getDB
 const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a ObjectId data type
 const jwt = require('jsonwebtoken');
@@ -7,11 +6,8 @@ require("dotenv").config({path: "./config.env"});
 
 let groupRoutes = express.Router();
 
-//Main route operations: Retrieve All, Retrieve One, Create one, update one, delete one (CRUD)
 
 //#1 Retrieve All
-//creates route = http://localhost:3000/groups
-//await require async function: wait till database is finished collecting from Mongo completely
 groupRoutes.route("/groups").get(verifyToken, async(request, response) => {
     let db = database.getDb()
     //Mongo returns an object called 'Mongo Cursor' -> turn into array
@@ -29,7 +25,7 @@ groupRoutes.route("/groups").get(verifyToken, async(request, response) => {
 groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
     let db = database.getDb()
     //findOne returns an object, not a Cursor
-    let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)}) //Match the param in the route
+    let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
 
     //Checking how many properties (keys) are in the data object returned from findOne
     if (Object.keys(data).length > 0) {
@@ -39,7 +35,7 @@ groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
     }
 })
 
-//#3 Create one, same route name is acceptable if the http method differs
+//#3 Create one
 groupRoutes.route("/groups").post(async(request, response) => {
     let db = database.getDb()
 
@@ -114,6 +110,34 @@ function verifyToken(request, response, next) {
     });
         
 }
+
+//Add to the requests DB when someone sends a request to someone else
+groupRoutes.route("/groups/:groupId/sendRequest").post(async (request, response) => {
+    const groupId = request.params.groupId;
+    const { recipientUserId } = request.body; // ID of the user being invited
+
+    // Make sure the recipient user is valid
+    const db = database.getDb();
+    const user = await db.collection("users").findOne({ _id: new ObjectId(recipientUserId) });
+
+    if (!user) {
+        return response.status(404).json({ message: "User not found" });
+    }
+
+    // Create a new request document
+    const requestDoc = {
+        groupId: new ObjectId(groupId),
+        senderId: new ObjectId(request.body.senderId),  // The user who is sending the invite (e.g., group creator)
+        recipientUserId: new ObjectId(recipientUserId),
+        status: "pending", // 'pending', 'accepted', or 'declined'
+        dateSent: new Date(),
+    };
+
+    // Insert the request into the requests collection
+    await db.collection("requests").insertOne(requestDoc);
+
+    response.status(200).json({ message: "Request sent successfully" });
+});
 
 
 module.exports = groupRoutes;

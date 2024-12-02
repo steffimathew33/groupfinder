@@ -118,3 +118,12 @@ export async function updateGroup(id, updatedGroup) {
 
     return response
 }
+
+
+//REQUEST FUNCTIONALITY
+
+export async function sendGroupRequest(groupId, requestData) {
+    const response = await axios.post(`${URL}/groups/${groupId}/sendRequest`, requestData);
+
+    return response;
+}
