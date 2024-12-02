@@ -1,5 +1,6 @@
 import { createGroup } from "../api"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { jwtDecode } from "jwt-decode";
 
 export function CreateGroup() {
 
@@ -13,6 +14,22 @@ export function CreateGroup() {
         isFull: false
     });
 
+    useEffect(() => {
+        async function loadCreatorData() {
+            try {
+                const token = sessionStorage.getItem("User");
+                if (token) {
+                    const decodedUser = jwtDecode(token);
+                    setGroup((prevData) => ({...prevData, createdBy: decodedUser._id}));
+                }
+            } catch (error) {
+                alert("Could not verify creator data.")
+            }
+            
+        }
+        loadCreatorData();
+    }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
     
@@ -21,11 +38,14 @@ export function CreateGroup() {
             // Split the value by commas and trim any spaces around each tag
             setGroup({...group, [name]: value.split(",").map(tag => tag.trim())});
         } else if (name === "maxPeople") {
-            setGroup({...group, [name]: value === "" ? 0 : parseInt(value, 10) // Automatically parse to integer, default to 0 if empty
-            });
+            const maxPeople = value === "" ? 0 : parseInt(value, 10);
+            setGroup((prevGroup) => ({...prevGroup, [name]: maxPeople}));
         } else {
             setGroup({...group, [name]: value});
         }
+
+        //Check if group is now full
+        setGroup((prevGroup) => ({...prevGroup, isFull: prevGroup.members?.length >= prevGroup.maxPeople}));
     };
 
     const handleSubmit = async (e) => {

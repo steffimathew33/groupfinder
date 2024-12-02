@@ -7,7 +7,7 @@ export function SendRequestButton() {
     const groupId = "674d5f6069ebe36c9ed63429"; //Cooked
 
     const [requestData, setRequestData] = useState({
-        recipientUserId: "674d39026b8894d40619ed41",
+        recipientUserId: "674d39026b8894d40619ed41", //Steffi
         senderId: null, 
     });
 
@@ -35,7 +35,7 @@ export function SendRequestButton() {
 
     return (
         <button onClick={sendRequest}>
-            Send Request to User
+            Send Request to Steffi
         </button>
     );
 }

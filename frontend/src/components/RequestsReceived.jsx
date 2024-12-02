@@ -70,7 +70,7 @@ export function RequestsList() {
             // Delete the request after successful acceptance
             try {
                 const deleteResponse = await deleteRequest(requestId);
-                console.log(deleteResponse.message); // Assuming deleteRequest returns a message
+                console.log(deleteResponse.message);
                 setRequests((prevRequests) => prevRequests.filter((req) => req._id !== requestId));
             } catch (deleteError) {
                 console.error("Error deleting the request:", deleteError.message);
@@ -83,7 +83,17 @@ export function RequestsList() {
         }
     }
 
-    async function handleReject(requestId) { }
+    async function handleReject(requestId) {
+        // Delete the request after successful acceptance
+        try {
+            const deleteResponse = await deleteRequest(requestId);
+            console.log(deleteResponse.message);
+            setRequests((prevRequests) => prevRequests.filter((req) => req._id !== requestId)); //Remove the current request from the UI
+        } catch (deleteError) {
+            console.error("Error deleting the request:", deleteError.message);
+            alert("The request was accepted, but could not be deleted from the list.");
+        }
+     }
 
     return (
         <div>

@@ -108,9 +108,14 @@ export async function getGroup(id) {
 }
 
 export async function createGroup(newGroup) {
-    const response = await axios.post(`${URL}/groups`, newGroup)
-
-    return response
+    try {
+        const response = await axios.post(`${URL}/groups`, newGroup);
+        alert("Group created successfully!");
+        return response;
+    } catch (error) {
+        const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred";
+        alert(`Error: ${errorMessage}`);
+    }
 }
 
 export async function updateGroup(id, updatedGroup) {

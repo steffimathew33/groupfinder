@@ -39,22 +39,30 @@ groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
 groupRoutes.route("/groups").post(async(request, response) => {
     let db = database.getDb()
 
+    const isItFull = request.body.maxPeople === 1;
+
     let mongoObj = {
         groupName: request.body.groupName,
         description: request.body.description,
         createdBy: request.body.createdBy,
         members: [request.body.createdBy], //Group start with the member that created the group
         projectTitle: request.body.projectTitle,
-        isFull: false, // Default to not full
+        isFull: isItFull,
         maxPeople: request.body.maxPeople,
         tags: request.body.tags || [],
         createdDate: new Date()
     };
-    let data = await db.collection("groups").insertOne(mongoObj)
+    try {
+        let data = await db.collection("groups").insertOne(mongoObj);
 
-    response.json(data) //For consistency
-    
-})
+        response.status(200).json({message: "Group created successfully", data});
+    } catch (error) {
+        // Handle database or other errors
+        console.error("Error creating group:", error);
+        response.status(500).json({ message: "Failed to create group", error: error.message });
+    }
+});
+
 
 //#4 Update one
 groupRoutes.route("/groups/:id").put(verifyToken, async(request, response) => {
@@ -157,12 +165,7 @@ groupRoutes.route("/requests").get(async (request, response) => {
     const db = database.getDb();
     try {
         let data = await db.collection("requests").find({}).toArray()
-
-        if (data.length > 0) {
-            return response.status(200).json(data);
-        } else {
-            return response.status(404).json({ message: "No requests found." });
-        }
+        response.json(data);
     } catch (error) {
         console.error(error);
         response.status(500).json({ message: "Failed to fetch requests." });
