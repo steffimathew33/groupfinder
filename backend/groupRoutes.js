@@ -139,5 +139,20 @@ groupRoutes.route("/groups/:groupId/sendRequest").post(async (request, response)
     response.status(200).json({ message: "Request sent successfully" });
 });
 
+groupRoutes.route("/requests").get(async (request, response) => {
+    const userId = request.user.id;
+
+    const db = database.getDb();
+    try {
+        // Fetch requests where the user is the recipient
+        const requests = await db.collection("requests").find({ recipientUserId: new ObjectId(userId) }).toArray();
+
+        response.status(200).json(requests);
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ message: "Failed to fetch requests." });
+    }
+});
+
 
 module.exports = groupRoutes;
