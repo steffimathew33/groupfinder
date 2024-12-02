@@ -22,7 +22,7 @@ groupRoutes.route("/groups").get(verifyToken, async(request, response) => {
 
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
-groupRoutes.route("/groups/:id").get(async(request, response) => {
+groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
     let db = database.getDb()
     //findOne returns an object, not a Cursor
     let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
@@ -115,6 +115,45 @@ groupRoutes.route("/groups/:groupId/sendRequest").post(async (request, response)
     response.status(200).json({ message: "Request sent successfully" });
 });
 
+//Accept a request that had been made
+groupRoutes.route("/groups/:groupId/acceptRequest").patch(async (request, response) => {
+    const db = database.getDb();
+    let group = await db.collection("groups").findOne({_id: new ObjectId(request.params.groupId)})
+    let sender = await db.collection("users").findOne({_id: new ObjectId(request.body.senderId)})
+    let recipient = await db.collection("users").findOne({_id: new ObjectId(request.body.recipientUserId)})
+
+    if (!sender) { return response.status(404).json({message: "Sender not found"})};
+    if (!recipient) { return response.status(404).json({message: "Recipient not found"})};
+
+    if (!group) {
+        return response.status(404).json({ message: "Group not found" });
+    }
+
+    // Check if the group is full
+    if (group.members.length >= group.maxMembers) {
+        return response.status(400).json({ message: "Group is full" });
+    }
+
+    // Add the sender to the group's members
+    group.members.push(request.body.senderId);
+    group.currentMembers += 1;
+
+    // If the group is now full, mark it as such
+    if (group.currentMembers === group.maxMembers) {
+        group.isFull = true;
+    }
+
+    recipient.inGroup = group._id;
+
+    await db.collection("groups").updateOne({ _id: request.params.groupId }, { $set: { members: group.members, currentMembers: group.currentMembers, isFull: group.isFull } });
+    await db.collection("users").updateOne({ _id: new ObjectId(request.body.recipientUserId) }, { $set: { inGroup: request.params.groupId } });
+
+    response.status(200).json({ message: "Request accepted, user added to the group" });
+    
+});
+
+
+
 //Get All Requests
 groupRoutes.route("/requests").get(async (request, response) => {
 
@@ -132,6 +171,5 @@ groupRoutes.route("/requests").get(async (request, response) => {
         response.status(500).json({ message: "Failed to fetch requests." });
     }
 });
-
 
 module.exports = groupRoutes;

@@ -137,3 +137,18 @@ export async function getAllRequests() {
         return
     }
 }
+
+export async function acceptRequest(groupId, senderId, recipientUserId) {
+    try {
+        const response = await axios.patch(`${URL}/groups/${groupId}/acceptRequest`, {senderId, recipientUserId});
+
+        if (response.status === 200) {
+            return response.data; // Return success response
+        } else {
+            throw new Error("Failed to accept the request");
+        }
+    } catch (error) {
+        console.error("Error in acceptRequest:", error);
+        throw error; // Throw the error to be handled by the calling function
+    }
+}

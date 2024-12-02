@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { getAllRequests, getUser, getGroup } from "../api";
+import { getAllRequests, getUser, getGroup, acceptRequest } from "../api";
 
 
 export function RequestsList() {
     const [requests, setRequests] = useState([]);
     const [users, setUsers] = useState([]);
+    const [recipients, setRecipients] = useState([]);
     const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -21,10 +22,12 @@ export function RequestsList() {
 
                     let usersData = [];
                     let groupsData = [];
+                    let recipientsData = [];
                     // Using a for loop to fetch user data for each senderId
                     for (const req of filteredRequests) {
                         const user = await getUser(req.senderId);
                         const group = await getGroup(req.groupId);
+                        const recip = await getUser(req.recipientUserId);
                         usersData.push({
                             senderId: req.senderId,
                             userName: `${user.firstName} ${user.lastName}`
@@ -33,9 +36,13 @@ export function RequestsList() {
                             groupId: req.groupId,
                             groupName: `${group.groupName}`
                         })
+                        recipientsData.push({
+                            recipientUserId: req.recipientUserId,
+                        })
                     }
                     setUsers(usersData);
                     setGroups(groupsData);
+                    setRecipients(recipientsData);
 
                 }
             } catch (error) {
@@ -53,6 +60,24 @@ export function RequestsList() {
         return <div>Loading...</div>;
     }
 
+    async function handleAccept(requestId, groupId, senderId, recipientUserId) {
+        try {
+            const response = await acceptRequest(groupId, senderId, recipientUserId);
+            
+            // Success: Do something with the response
+            console.log(response.message); // Log the success message
+            alert(response.message); // Notify the user about the successful operation
+
+            //Remove from list
+            //setRequests((prevRequests) => prevRequests.filter((req) => req._id !== requestId));
+        } catch (error) {
+            console.error("Error accepting the request:", error);
+            alert("Failed to accept the request. Please try again.");
+        }
+    }
+
+    async function handleReject(requestId) { }
+
     return (
         <div>
             <h2>Your Requests</h2>
@@ -63,12 +88,17 @@ export function RequestsList() {
                     {requests.map((request) => {
                         const sender = users.find((user) => user.senderId === request.senderId);
                         const g = groups.find((group) => group.groupId === request.groupId);
+                        const recip = recipients.find((user) => user.recipientUserId === request.recipientUserId);
                         return (
                             <li key={request._id}>
                                 Group Name: {g ? g.groupName : 'Loading...'} <br />
                                 Sender: {sender ? sender.userName : 'Loading...'} <br />
                                 Status: {request.status} <br />
                                 Date Sent: {new Date(request.dateSent).toLocaleString()}
+                                <div>
+                                <button onClick={() => handleAccept(request._id, g.groupId, sender.senderId, recip.recipientUserId)}>Accept</button>
+                                <button onClick={() => handleReject(request._id)}>Reject</button>
+                                </div>
                             </li>
                         );
                     })}

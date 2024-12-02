@@ -15,7 +15,7 @@ const SALT_ROUNDS = 6;
 //#1 Retrieve All
 //creates route = http://localhost:3000/users
 //await require async function: wait till database is finished collecting from Mongo completely
-userRoutes.route("/users").get(async(request, response) => {
+userRoutes.route("/users").get(verifyToken, async(request, response) => {
     let db = database.getDb()
     //Mongo returns an object called 'Mongo Cursor' -> turn into array
     let data = await db.collection("users").find({}).toArray() //return everything in the collection if no parameter for find
@@ -43,7 +43,7 @@ userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
 })
 
 //#3 Create one, same route name is acceptable if the http method differs
-userRoutes.route("/users").post(async(request, response) => {
+userRoutes.route("/users").post(verifyToken, async(request, response) => {
     let db = database.getDb()
 
     const emailTaken = await db.collection("users").findOne({email: request.body.email})
@@ -76,7 +76,7 @@ userRoutes.route("/users").post(async(request, response) => {
 })
 
 //#4 Update one
-userRoutes.route("/users/:id").put(async(request, response) => {
+userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
     let db = database.getDb()
     let mongoObj = {
         $set: {
@@ -99,7 +99,7 @@ userRoutes.route("/users/:id").put(async(request, response) => {
 })
 
 //#5 Delete One
-userRoutes.route("/users/:id").delete(async(request, response) => {
+userRoutes.route("/users/:id").delete(verifyToken, async(request, response) => {
     let db = database.getDb()
     let data = await db.collection("users").deleteOne({_id: new ObjectId(request.params.id)}) 
     response.json(data);
