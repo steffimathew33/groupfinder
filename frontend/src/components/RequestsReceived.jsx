@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { getAllRequests, getUser, getGroup, acceptRequest } from "../api";
+import { getAllRequests, getUser, getGroup, acceptRequest, deleteRequest } from "../api";
 
 
 export function RequestsList() {
@@ -64,15 +64,22 @@ export function RequestsList() {
         try {
             const response = await acceptRequest(groupId, senderId, recipientUserId);
             
-            // Success: Do something with the response
             console.log(response.message); // Log the success message
             alert(response.message); // Notify the user about the successful operation
 
-            //Remove from list
-            //setRequests((prevRequests) => prevRequests.filter((req) => req._id !== requestId));
+            // Delete the request after successful acceptance
+            try {
+                const deleteResponse = await deleteRequest(requestId);
+                console.log(deleteResponse.message); // Assuming deleteRequest returns a message
+                setRequests((prevRequests) => prevRequests.filter((req) => req._id !== requestId));
+            } catch (deleteError) {
+                console.error("Error deleting the request:", deleteError.message);
+                alert("The request was accepted, but could not be deleted from the list.");
+            }
         } catch (error) {
-            console.error("Error accepting the request:", error);
-            alert("Failed to accept the request. Please try again.");
+            const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred";
+            console.error("Error accepting the request:", errorMessage);
+            alert(errorMessage);
         }
     }
 

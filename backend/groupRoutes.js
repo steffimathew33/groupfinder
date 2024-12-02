@@ -130,7 +130,7 @@ groupRoutes.route("/groups/:groupId/acceptRequest").patch(async (request, respon
     }
 
     // Check if the group is full
-    if (group.members.length >= group.maxMembers) {
+    if (group.members.length >= group.maxPeople) {
         return response.status(400).json({ message: "Group is full" });
     }
 
@@ -138,14 +138,11 @@ groupRoutes.route("/groups/:groupId/acceptRequest").patch(async (request, respon
     group.members.push(request.body.senderId);
     group.currentMembers += 1;
 
-    // If the group is now full, mark it as such
-    if (group.currentMembers === group.maxMembers) {
-        group.isFull = true;
-    }
+    const isFull = group.members.length === group.maxPeople;
 
     recipient.inGroup = group._id;
 
-    await db.collection("groups").updateOne({ _id: request.params.groupId }, { $set: { members: group.members, currentMembers: group.currentMembers, isFull: group.isFull } });
+    await db.collection("groups").updateOne({ _id: new ObjectId(request.params.groupId) }, { $set: { members: group.members, isFull: isFull } });
     await db.collection("users").updateOne({ _id: new ObjectId(request.body.recipientUserId) }, { $set: { inGroup: request.params.groupId } });
 
     response.status(200).json({ message: "Request accepted, user added to the group" });
@@ -171,5 +168,12 @@ groupRoutes.route("/requests").get(async (request, response) => {
         response.status(500).json({ message: "Failed to fetch requests." });
     }
 });
+
+//Delete a request
+groupRoutes.route("/requests/:id").delete(verifyToken, async(request, response) => {
+    let db = database.getDb()
+    let data = await db.collection("requests").deleteOne({_id: new ObjectId(request.params.id)}) 
+    response.json(data);
+})
 
 module.exports = groupRoutes;

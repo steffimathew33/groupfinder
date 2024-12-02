@@ -152,3 +152,9 @@ export async function acceptRequest(groupId, senderId, recipientUserId) {
         throw error; // Throw the error to be handled by the calling function
     }
 }
+
+export async function deleteRequest(id) {
+    const response = await axios.delete(`${URL}/requests/${id}`)
+
+    return response //For debugging, deleting doesn't need to return any info.
+}
