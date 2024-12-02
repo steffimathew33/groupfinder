@@ -83,3 +83,38 @@ export async function verifyUser(user) {
         return
     }
 }
+
+
+// GROUP FUNCTIONALITY
+
+export async function getAllGroups() {
+    const response = await axios.get(`${URL}/groups`)
+
+    if (response.status === 200) {
+        return response.data
+    } else {
+        return
+    }
+}
+
+export async function getGroup(id) {
+    const response = await axios.get(`${URL}/groups/${id}`)
+
+    if (response.status === 200) {
+        return response.data
+    } else {
+        return
+    }
+}
+
+export async function createGroup(newGroup) {
+    const response = await axios.post(`${URL}/groups`, newGroup)
+
+    return response
+}
+
+export async function updateGroup(id, updatedGroup) {
+    const response = await axios.put(`${URL}/groups/${id}`, updatedGroup)
+
+    return response
+}
