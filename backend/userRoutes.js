@@ -63,7 +63,8 @@ userRoutes.route("/users").post(async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            signupDate: new Date()
+            signupDate: new Date(),
+            inGroup: request.body.inGroup
         }
          data = await db.collection("users").insertOne(mongoObj)
 
@@ -86,7 +87,8 @@ userRoutes.route("/users/:id").put(async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            signupDate: request.body.signupDate
+            signupDate: request.body.signupDate,
+            inGroup: request.body.group
         }
     }
     let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)
@@ -126,5 +128,28 @@ userRoutes.route("/users/login").post(async(request, response) => {
     
 })
 
+function verifyToken(request, response, next) {
+    const authentication = request.headers["Authorization"];
+    if (!authentication) {
+        return response.status(401).json({message: "Not logged in."});
+    }
 
+    const token = authentication.split(" ")[1] //Bearer 12345 (splits by space and get second item)
+
+    if (!token) {
+        // If there's no token after "Bearer", return an error
+        return response.status(401).json({ message: "Token missing." });
+    }
+
+    //Compare token with our secret key. If it's valid, return the user. If it's not, return error.
+    jwt.verify(token, process.env.SECRETKEY, (error, user) => {
+        if (error) {
+            return response.status(403).json({message: "Invalid token."});
+        }
+
+        request.user = user;
+        next(); //proceed to next step. aka the rest of the backend function.
+    });
+        
+}
 module.exports = userRoutes;

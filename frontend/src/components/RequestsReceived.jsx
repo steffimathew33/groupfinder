@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { getAllRequests, getUser } from "../api";
+import { getAllRequests, getUser, getGroup } from "../api";
 
 
 export function RequestsList() {
     const [requests, setRequests] = useState([]);
     const [users, setUsers] = useState([]);
+    const [groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,15 +20,23 @@ export function RequestsList() {
                     setRequests(filteredRequests);
 
                     let usersData = [];
+                    let groupsData = [];
                     // Using a for loop to fetch user data for each senderId
                     for (const req of filteredRequests) {
                         const user = await getUser(req.senderId);
+                        const group = await getGroup(req.groupId);
                         usersData.push({
                             senderId: req.senderId,
                             userName: `${user.firstName} ${user.lastName}`
                         });
+                        groupsData.push({
+                            groupId: req.groupId,
+                            groupName: `${group.groupName}`
+                        })
                     }
-                    setUsers(usersData)
+                    setUsers(usersData);
+                    setGroups(groupsData);
+
                 }
             } catch (error) {
                 console.error(error);
@@ -53,10 +61,11 @@ export function RequestsList() {
             ) : (
                 <ul>
                     {requests.map((request) => {
-                        const sender = users.find(user => user.senderId === request.senderId);
+                        const sender = users.find((user) => user.senderId === request.senderId);
+                        const g = groups.find((group) => group.groupId === request.groupId);
                         return (
                             <li key={request._id}>
-                                Group ID: {request.groupId} <br />
+                                Group Name: {g ? g.groupName : 'Loading...'} <br />
                                 Sender: {sender ? sender.userName : 'Loading...'} <br />
                                 Status: {request.status} <br />
                                 Date Sent: {new Date(request.dateSent).toLocaleString()}

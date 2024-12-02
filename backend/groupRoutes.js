@@ -22,7 +22,7 @@ groupRoutes.route("/groups").get(verifyToken, async(request, response) => {
 
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
-groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
+groupRoutes.route("/groups/:id").get(async(request, response) => {
     let db = database.getDb()
     //findOne returns an object, not a Cursor
     let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
