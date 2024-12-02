@@ -43,15 +43,14 @@ groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
 groupRoutes.route("/groups").post(async(request, response) => {
     let db = database.getDb()
 
-    //const userId = req.body.user.id;
-
     let mongoObj = {
         groupName: request.body.groupName,
         description: request.body.description,
         createdBy: request.body.createdBy,
-        members: [request.body.createdBy],
+        members: [request.body.createdBy], //Group start with the member that created the group
         projectTitle: request.body.projectTitle,
         isFull: false, // Default to not full
+        maxPeople: request.body.maxPeople,
         tags: request.body.tags || [],
         createdDate: new Date()
     };
@@ -70,6 +69,7 @@ groupRoutes.route("/groups/:id").put(verifyToken, async(request, response) => {
             description: request.body.description,
             projectTitle: request.body.projectTitle,
             isFull: request.body.isFull,
+            maxPeople: request.body.maxPeople,
             tags: request.body.tags
         },
         $addToSet: {
@@ -109,7 +109,7 @@ function verifyToken(request, response, next) {
             return response.status(403).json({message: "Invalid token."});
         }
 
-        request.body.user = user;
+        request.user = user;
         next(); //proceed to next step. aka the rest of the backend function.
     });
         

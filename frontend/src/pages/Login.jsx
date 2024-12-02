@@ -1,6 +1,5 @@
 import { CreateUser } from "../components/CreateUser"
 import { LoginUser } from "../components/LoginComp"
-import { CreateGroup } from "../components/CreateGroup"
 import { useState } from "react"
 
 export function Login() {
@@ -22,7 +21,6 @@ export function Login() {
                     <button onClick={() => setView(!view)}>Already A User?</button>
                 </>
             )}
-            <CreateGroup />
         </>
     );
 }

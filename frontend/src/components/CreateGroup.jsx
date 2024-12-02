@@ -8,12 +8,24 @@ export function CreateGroup() {
         description: "",     // Description of the group
         createdBy: "",       // User ID or name of the creator (if needed for display)
         projectTitle: "",    // Project title
-        tags: "",            // Tags, can be a comma-separated string or array
+        tags: [],            // Tags, can be a comma-separated string or array
+        maxPeople: "",
         isFull: false        // Boolean to indicate if the group is full (default false)
     });
 
     const handleChange = (e) => {
-        setGroup({ ...group, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+    
+        // Check if the name is "tags" to handle it as an array
+        if (name === "tags") {
+            // Split the value by commas and trim any spaces around each tag
+            setGroup({...group, [name]: value.split(",").map(tag => tag.trim())});
+        } else if (name === "maxPeople") {
+            setGroup({...group, [name]: value === "" ? 0 : parseInt(value, 10) // Automatically parse to integer, default to 0 if empty
+            });
+        } else {
+            setGroup({...group, [name]: value});
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -49,10 +61,17 @@ export function CreateGroup() {
                 onChange={handleChange}
             />
             <input
+                type="number"
+                name="maxPeople"
+                placeholder="Max Group Size"
+                value={group.maxPeople}
+                onChange={handleChange}
+            />
+            <input
                 type="text"
                 name="tags"
                 placeholder="Tags (comma-separated)"
-                value={group.tags}
+                value={group.tags.join(", ")}
                 onChange={handleChange}
             />
             <button type="submit">Create Group</button>

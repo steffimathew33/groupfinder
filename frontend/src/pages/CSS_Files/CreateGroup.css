@@ -1,0 +1,4 @@
+/* Add margin-top to CreateGroup component */
+.create-group {
+    margin-top: 60px; /* Adjust this to match the height of your navbar */
+}
