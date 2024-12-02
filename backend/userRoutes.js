@@ -2,7 +2,7 @@ const express = require("express");
 //Database is now defined because in server.js, we ran connectToServer function, can now use getDB
 const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a ObjectId data type
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({path: "./config.env"});
 
