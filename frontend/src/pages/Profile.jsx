@@ -1,15 +1,23 @@
 import './Profile.css';
 import React, { useState, useEffect } from "react";
 import { getUser } from "../api"; // Ensure the path is correct to your api.js
-import "./Profile.css"; // Import the CSS file for styling
+import "./Profile.css"; // Import the CSS file for 
+import { jwtDecode } from "jwt-decode";
 
 export function Profile() {
     const [userData, setUserData] = useState(null); // To store the fetched user data
     const [error, setError] = useState(null); // To handle any errors
 
-    const userId = "674d39026b8894d40619ed41"; // Steffi Mathew's user ID from the MongoDB screenshot
+    let userId = ""; // Steffi Mathew's user ID from the MongoDB screenshot
 
     useEffect(() => {
+        async function loadUserData() {
+            const token = sessionStorage.getItem("User");
+            if (token) {
+                const decodedUser = jwtDecode(token);
+                userId = decodedUser._id;
+            }
+        }
         async function fetchUserData() {
             try {
                 const data = await getUser(userId); // Get user data by ID
@@ -20,7 +28,7 @@ export function Profile() {
                 console.error(err); // Log error for debugging
             }
         }
-
+        loadUserData();
         fetchUserData(); // Call function to fetch user data
     }, []); // Empty dependency array means this runs once when the component mounts
 
