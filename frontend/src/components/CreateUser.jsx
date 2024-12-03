@@ -43,12 +43,29 @@ export function CreateUser() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input placeholder={"First Name"} onChange={handleChange} name="firstName" required maxLength={20}/>
-            <input placeholder={"Last Name"} onChange={handleChange} name="lastName" required maxLength={20}/>
-            <input placeholder={"Email"} onChange={handleChange} name="email" required maxLength={40}/>
-            <input placeholder={"Password"} onChange={handleChange} name="password" type="password" required maxLength={20}/>
-            <button type="submit">Create Account</button>
-        </form>
+        <div className="create-page-container">
+            <div className="create-input">
+                <div className="create-title">
+                    <h1>Create Account</h1>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="create-first-name">
+                        <input placeholder={"First Name"} onChange={handleChange} name="firstName" required maxLength={20}/>
+                    </div>
+                    <div className="create-last-name">
+                        <input placeholder={"Last Name"} onChange={handleChange} name="lastName" required maxLength={20}/>
+                    </div>
+                    <div className="create-email">
+                        <input placeholder={"Email"} onChange={handleChange} name="email" required maxLength={40}/>
+                    </div>
+                    <div className="create-password">
+                        <input placeholder={"Password"} onChange={handleChange} name="password" type="password" required maxLength={20}/>
+                    </div>
+                    <div className="create-button">
+                        <button type="submit">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     )
 }

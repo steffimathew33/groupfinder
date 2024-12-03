@@ -1,0 +1,84 @@
+
+@import url('Base.css');
+
+.login-page-container {
+    margin-top: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 260px;
+    text-align: center;
+}
+
+/* Login input form container */
+.login-input {
+    background-color: #FFFFFF; /* White background for the profile */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 250px;
+    margin-top: 20px;
+}
+
+/* Styling the button inside login-input */
+.login-button {
+    padding: 20px;           /* Adjust padding to reduce button size */
+    font-size: 1rem;             /* Adjust font size to match design */
+    width: auto;                 /* Allow width to be adjusted automatically */
+    display: flex;              /* Enable Flexbox inside the form */
+    flex-direction: column;     /* Stack form elements vertically */
+    align-items: center;        /* Center the items horizontally inside the form */
+    justify-content: center;    /* Center the items vertically inside the form */
+}
+
+.new-account-button {
+    padding: 20px;
+    font-size: 1rem;             /* Adjust font size to match design */
+    width: auto;                 /* Allow width to be adjusted automatically */
+    display: flex;              /* Enable Flexbox inside the form */
+    flex-direction: column;     /* Stack form elements vertically */
+    align-items: center;        /* Center the items horizontally inside the form */
+    justify-content: center;    /* Center the items vertically inside the form */
+}
+
+.create-page-container {
+    margin-top: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+    text-align: center;
+}
+
+/* Login input form container */
+.create-input {
+    background-color: #FFFFFF; /* White background for the profile */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+/* Styling the button inside login-input */
+.create-button {
+    padding: 20px;           /* Adjust padding to reduce button size */
+    font-size: 1rem;             /* Adjust font size to match design */
+    width: auto;                 /* Allow width to be adjusted automatically */
+    display: flex;              /* Enable Flexbox inside the form */
+    flex-direction: column;     /* Stack form elements vertically */
+    align-items: center;        /* Center the items horizontally inside the form */
+    justify-content: center;    /* Center the items vertically inside the form */
+}
+
+.already-user-button {
+    padding: 20px;
+    font-size: 1rem;             /* Adjust font size to match design */
+    width: auto;                 /* Allow width to be adjusted automatically */
+    display: flex;              /* Enable Flexbox inside the form */
+    flex-direction: column;     /* Stack form elements vertically */
+    align-items: center;        /* Center the items horizontally inside the form */
+    justify-content: center;    /* Center the items vertically inside the form */
+}
