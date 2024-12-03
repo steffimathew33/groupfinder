@@ -1,0 +1,46 @@
+@import url('Base.css');
+
+.my-group h1 {
+    margin-top: 50px;
+}
+
+.my-group h2 {
+    margin-top: 70px;
+}
+
+
+.my-group{
+    font-size: 20px;
+    color: #000000;
+    padding-top: 25px; /* Add padding instead of margin */
+    text-align: center;
+}
+
+
+
+/* Navigation Bar */
+.navbar .navItem {
+    text-decoration: none; /* Remove underline if any */
+    display: inline-block; /* Ensure links behave like blocks for styling */
+    border: 1px solid transparent; /* Avoid any default border */
+}
+
+
+.navbar-container {
+    background-color: #2774AE; /* Darker blue for hover effect */
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    padding: 30px;
+}
+
+.navbar-logout-button {
+    font-size: 1rem;             /* Adjust font size to match design */
+    width: auto;                 /* Allow width to be adjusted automatically */
+    display: flex;              /* Enable Flexbox inside the form */
+    flex-direction: column;     /* Stack form elements vertically */
+    align-items: center;        /* Center the items horizontally inside the form */
+    justify-content: center;    /* Center the items vertically inside the form  */
+}
+
