@@ -4,6 +4,7 @@ const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a ObjectId data type
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { verifyToken } = require('./auth');
 require("dotenv").config({path: "./config.env"});
 
 let userRoutes = express.Router();
@@ -14,7 +15,7 @@ const SALT_ROUNDS = 6;
 //#1 Retrieve All
 //creates route = http://localhost:3000/users
 //await require async function: wait till database is finished collecting from Mongo completely
-userRoutes.route("/users").get(async(request, response) => {
+userRoutes.route("/users").get(verifyToken, async(request, response) => {
     let db = database.getDb()
     //Mongo returns an object called 'Mongo Cursor' -> turn into array
     let data = await db.collection("users").find({}).toArray() //return everything in the collection if no parameter for find
@@ -28,7 +29,7 @@ userRoutes.route("/users").get(async(request, response) => {
 
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
-userRoutes.route("/users/:id").get(async(request, response) => {
+userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
     let db = database.getDb()
     //findOne returns an object, not a Cursor
     let data = await db.collection("users").findOne({_id: new ObjectId(request.params.id)}) //Match the param in the route
@@ -42,7 +43,7 @@ userRoutes.route("/users/:id").get(async(request, response) => {
 })
 
 //#3 Create one, same route name is acceptable if the http method differs
-userRoutes.route("/users").post(async(request, response) => {
+userRoutes.route("/users").post(verifyToken, async(request, response) => {
     let db = database.getDb()
 
     const emailTaken = await db.collection("users").findOne({email: request.body.email})
@@ -63,7 +64,8 @@ userRoutes.route("/users").post(async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            signupDate: new Date()
+            signupDate: new Date(),
+            inGroup: request.body.inGroup
         }
          data = await db.collection("users").insertOne(mongoObj)
 
@@ -74,7 +76,7 @@ userRoutes.route("/users").post(async(request, response) => {
 })
 
 //#4 Update one
-userRoutes.route("/users/:id").put(async(request, response) => {
+userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
     let db = database.getDb()
     let mongoObj = {
         $set: {
@@ -86,7 +88,8 @@ userRoutes.route("/users/:id").put(async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            signupDate: request.body.signupDate
+            signupDate: request.body.signupDate,
+            inGroup: request.body.group
         }
     }
     let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)
@@ -96,7 +99,7 @@ userRoutes.route("/users/:id").put(async(request, response) => {
 })
 
 //#5 Delete One
-userRoutes.route("/users/:id").delete(async(request, response) => {
+userRoutes.route("/users/:id").delete(verifyToken, async(request, response) => {
     let db = database.getDb()
     let data = await db.collection("users").deleteOne({_id: new ObjectId(request.params.id)}) 
     response.json(data);
@@ -125,6 +128,5 @@ userRoutes.route("/users/login").post(async(request, response) => {
     
     
 })
-
 
 module.exports = userRoutes;

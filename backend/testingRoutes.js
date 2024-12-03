@@ -2,7 +2,7 @@ const express = require("express");
 //Database is now defined because in server.js, we ran connectToServer function, can now use getDB
 const database = require("./connect");
 const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a ObjectId data type
-const jwt = require('jsonwebtoken');
+const { verifyToken } = require('./auth');
 require("dotenv").config({path: "./config.env"});
 
 let testingRoutes = express.Router();
@@ -82,29 +82,5 @@ testingRoutes.route("/testing/:id").delete(verifyToken, async(request, response)
     response.json(data);
 })
 
-function verifyToken(request, response, next) {
-    const authentication = request.headers["Authorization"];
-    if (!authentication) {
-        return response.status(401).json({message: "Not logged in."});
-    }
-
-    const token = authentication.split(" ")[1] //Bearer 12345 (splits by space and get second item)
-
-    if (!token) {
-        // If there's no token after "Bearer", return an error
-        return response.status(401).json({ message: "Token missing." });
-    }
-
-    //Compare token with our secret key. If it's valid, return the user. If it's not, return error.
-    jwt.verify(token, process.env.SECRETKEY, (error, user) => {
-        if (error) {
-            return response.status(403).json({message: "Invalid token."});
-        }
-
-        request.body.user = user;
-        next(); //proceed to next step. aka the rest of the backend function.
-    });
-        
-}
 
 module.exports = testingRoutes;

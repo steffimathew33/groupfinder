@@ -3,11 +3,12 @@ import { LoginUser } from "../components/LoginComp"
 import { useState } from "react"
 import "./Login.css"; // Import the CSS file for styling
 
-export function Login(){
+export function Login() {
 
-    //If view = 0 --> Login, if view = 1 --> Create
+    // If view = 0 --> Login, if view = 1 --> Create
     const [view, setView] = useState(0); 
-    return(
+
+    return (
         <>
         {/*If the view is 0, show the login page with a button to switch views, it's an if statement basically using ?*/}
             {!view ?

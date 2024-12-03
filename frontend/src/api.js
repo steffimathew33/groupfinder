@@ -83,3 +83,83 @@ export async function verifyUser(user) {
         return
     }
 }
+
+
+// GROUP FUNCTIONALITY
+
+export async function getAllGroups() {
+    const response = await axios.get(`${URL}/groups`)
+
+    if (response.status === 200) {
+        return response.data
+    } else {
+        return
+    }
+}
+
+export async function getGroup(id) {
+    const response = await axios.get(`${URL}/groups/${id}`)
+
+    if (response.status === 200) {
+        return response.data
+    } else {
+        return
+    }
+}
+
+export async function createGroup(newGroup) {
+    try {
+        const response = await axios.post(`${URL}/groups`, newGroup);
+        alert("Group created successfully!");
+        return response;
+    } catch (error) {
+        const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred";
+        alert(`Error: ${errorMessage}`);
+    }
+}
+
+export async function updateGroup(id, updatedGroup) {
+    const response = await axios.put(`${URL}/groups/${id}`, updatedGroup)
+
+    return response
+}
+
+
+//REQUEST FUNCTIONALITY
+
+export async function sendGroupRequest(groupId, requestData) {
+    const response = await axios.post(`${URL}/groups/${groupId}/sendRequest`, requestData);
+
+    return response;
+}
+
+export async function getAllRequests() {
+    const response = await axios.get(`${URL}/requests`)
+
+    if (response.status === 200) {
+        return response.data
+    } else {
+        return
+    }
+}
+
+export async function acceptRequest(groupId, senderId, recipientUserId) {
+    try {
+        const response = await axios.patch(`${URL}/groups/${groupId}/acceptRequest`, {senderId, recipientUserId});
+
+        if (response.status === 200) {
+            return response.data; // Return success response
+        } else {
+            throw new Error("Failed to accept the request");
+        }
+    } catch (error) {
+        console.error("Error in acceptRequest:", error);
+        throw error; // Throw the error to be handled by the calling function
+    }
+}
+
+export async function deleteRequest(id) {
+    const response = await axios.delete(`${URL}/requests/${id}`)
+
+    return response //For debugging, deleting doesn't need to return any info.
+}
