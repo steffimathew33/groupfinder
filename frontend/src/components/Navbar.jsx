@@ -12,19 +12,25 @@ export function Navbar() {
     }
     
     return (
-        <div className="navbar">
-            {pageData.map((page) => {
-                return (
-                    <Link to={page.path} className="navItem">
-                        <button>
-                            {page.name}
-                        </button>
-                    </Link>
-                )
-            })}
-            <button onClick={Logout}>Log Out</button>
+        <div className="navbar-container">
+            <div className="navbar">
+                {pageData.map((page) => {
+                    return (
+                        <Link to={page.path} className="navItem">
+                            <div className="navbar-buttons">
+                                <button>
+                                    {page.name}
+                                </button>
+                            </div>
+                        </Link>
+                    )
+                })}
+                <div className="navbar-logout-button">
+                    <button onClick={Logout}>Log Out</button>
+                </div>
 
 
+            </div>
         </div>
     )
 }

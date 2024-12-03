@@ -14,7 +14,6 @@ export function Home() {
             <SendRequestButton />
             </div>
             <div>
-            <h2>Test Group Request</h2>
             <RequestsList />
             </div>
         </>
