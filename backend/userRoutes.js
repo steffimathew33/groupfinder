@@ -30,7 +30,13 @@ userRoutes.route("/users").get(verifyToken, async(request, response) => {
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
 userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
+    console.log("Received request with ID:", request.params.id);  // Log the ID being passed
     let db = database.getDb()
+
+    // Check if the id is a valid ObjectId
+    if (!ObjectId.isValid(request.params.id)) {
+        return response.status(400).json({ message: "Invalid user ID format" });
+    }
     //findOne returns an object, not a Cursor
     let data = await db.collection("users").findOne({_id: new ObjectId(request.params.id)}) //Match the param in the route
 
@@ -124,9 +130,29 @@ userRoutes.route("/users/login").post(async(request, response) => {
     } else {
         response.json({success: false, message: "User not found."})
     }
-    
-    
-    
 })
+
+//Search through user database using query
+userRoutes.route("/usersearch").get(async (request, response) => {
+    const search = request.query.firstName;
+    if (!search) {
+        return response.status(400).json({ error: "Username query parameter is required" });
+    }
+
+    try {
+        console.log("Search term received:", search); // Log the search term
+        let db = database.getDb();
+        let data = await db.collection("users").find({
+            firstName: { $regex: search, $options: "i" }}).toArray();
+
+        if (data.length > 0) {
+            response.json(data);
+        } else {
+            response.status(404).json({ message: "No users found matching the query." });
+        }
+    } catch (error) {
+        response.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = userRoutes;
