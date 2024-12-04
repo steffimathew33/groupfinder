@@ -30,7 +30,6 @@ userRoutes.route("/users").get(verifyToken, async(request, response) => {
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
 userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
-    console.log("Received request with ID:", request.params.id);  // Log the ID being passed
     let db = database.getDb()
 
     // Check if the id is a valid ObjectId
@@ -142,7 +141,6 @@ userRoutes.route("/usersearch").get(async (request, response) => {
     }
 
     try {
-        console.log("Search term received:", search); // Log the search term
         let db = database.getDb();
         let data = await db.collection("users").find({
             fullName: { $regex: search, $options: "i" }}).toArray();
