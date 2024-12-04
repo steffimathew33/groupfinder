@@ -74,7 +74,9 @@ export function Profile() {
             {/* If the view is 0, show the profile page, else show the Edit Profile form */}
             {!view1 ? (
                 <div className="profile-container">
+                    <div className = "profile-title">
                     <h1><br /><br />Profile Page</h1>
+                    </div>
                     <div className="profile-details">
                         <img
                             src={userData.profilePicture || "/default-profile.png"} // Fallback if profilePicture is null
