@@ -44,6 +44,7 @@ export function MyGroup() {
         <div className="my-group">
             <h1 style={{ marginTop: "50px" }}>My Group</h1>
             <h2 style={{ marginTop: "70px" }}>{group.groupName || "No Group"}</h2> {/* Display the group name */}
+            <p style={{ marginTop: "85px" }}>{group.description || "" }</p>  {/*Display group description */}
         </div>
     );
 }
