@@ -14,7 +14,11 @@ export function CreateGroup() {
         maxPeople: "",
         isFull: false
     });
+<<<<<<< HEAD
     const [userData, setUserData] = useState(null);
+=======
+    const [userData, setUserData] = useState({});
+>>>>>>> 75926860bea16422cbfb012e320771becaff53a7
 
     useEffect(() => {
         async function loadCreatorData() {
@@ -24,6 +28,7 @@ export function CreateGroup() {
                     const decodedUser = jwtDecode(token);
                     setUserData(decodedUser);
                     setGroup((prevData) => ({...prevData, createdBy: decodedUser._id}));
+                    setUserData(decodedUser);
                 }
             } catch (error) {
                 alert("Could not verify creator data.")
@@ -58,6 +63,7 @@ export function CreateGroup() {
             alert("Account could not be created.");
         }
         const groupId = response.data._id;
+<<<<<<< HEAD
         
         const updatedUser = {
             ...userData,  // Spread the entire user data
@@ -71,6 +77,18 @@ export function CreateGroup() {
         } else {
             console.log("Failed to update user's inGroup");
         }
+=======
+        console.log(groupId);
+        const updatedUser = {
+            ...userData,
+            inGroup: groupId,
+        }
+        let updatedUserResponse = await updateUser(userData._id, updatedUser)
+        if (updatedUserResponse.status === 200) {
+            console.log("User inGroup updated successfully")
+        }
+
+>>>>>>> 75926860bea16422cbfb012e320771becaff53a7
         console.log(group);
     };
 
