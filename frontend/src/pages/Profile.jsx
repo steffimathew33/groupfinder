@@ -1,13 +1,14 @@
 import './Profile.css';
 import React, { useState, useEffect } from "react";
 import { getUser } from "../api"; 
+import { updateUser } from "../api"
 import { jwtDecode } from "jwt-decode";
-import { CreateUser } from "../components/CreateUser";
 
 export function Profile() {
     const [userData, setUserData] = useState(null); // To store the fetched user data
     const [error, setError] = useState(null); // To handle any errors
     const [view1, setView1] = useState(0); // To toggle between views
+    const [originalData, setOriginalData] = useState(null); // To store the original data fetched from the database
 
     let userId = ""; // User ID from session
 
@@ -24,6 +25,7 @@ export function Profile() {
                 const data = await getUser(userId); // Get user data by ID
                 console.log(data); // Log for debugging
                 setUserData(data); // Set the fetched data
+                setOriginalData(data); 
             } catch (err) {
                 setError("Failed to fetch user data");
                 console.error(err); // Log error for debugging
@@ -46,15 +48,26 @@ export function Profile() {
     // Function to handle saving updated data (for now, this is a placeholder)
     const handleSave = () => {
         // Logic to save the updated user data
-        console.log("Saving updated user data:", userData);
+        // console.log("Saving updated user data:", userData);
+        updateUser(userData._id, userData); // updates info in database
         setView1(0); // Return to profile view after saving
     };
 
     // Function to handle input changes
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setUserData({ ...userData, [name]: value });
+        setUserData({ ...userData, [name]: value }); // updates userData, not database
     };
+
+    const handleCancel = () => {
+        setUserData(originalData); // Reset userData to the original data
+        setView1(0); // Return to profile view
+    };
+
+
+    
+
+    
 
     return (
         <>
@@ -140,7 +153,7 @@ export function Profile() {
                             <button type="button" onClick={handleSave}>
                                 Save
                             </button>
-                            <button type="button" onClick={() => setView1(0)}>
+                            <button type="button" onClick={handleCancel}>
                                 Cancel
                             </button>
                         </div>
