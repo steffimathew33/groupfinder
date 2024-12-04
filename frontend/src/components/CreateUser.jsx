@@ -16,12 +16,15 @@ export function CreateUser() {
     }
 
     async function handleSubmit(e) {
-        e.preventDefault()
+        e.preventDefault(); // Prevent default form submission behavior
+
         try {
-            let response = await createUser(user);
+            let response = await createUser(user); // Assuming `createUser` is your API call
             console.log(response);
-    
-            if (response.status !== 200) {
+
+            if (response.status === 200) {
+                alert("Account created!");
+            } else {
                 alert("Account could not be created.");
             }
         } catch (error) {
