@@ -43,7 +43,7 @@ export function SearchBar() {
             ) : (
                 <ul>
                     {results.map((user) => (
-                        <li key={user._id}>{user.firstName}</li>  // Display user names
+                        <li key={user._id}>{user.firstName} {user.lastName}</li>  // Display user names
                     ))}
                 </ul>
             )}

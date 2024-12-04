@@ -136,7 +136,7 @@ userRoutes.route("/users/login").post(async(request, response) => {
 
 //Search through user database using query
 userRoutes.route("/usersearch").get(async (request, response) => {
-    const search = request.query.firstName;
+    const search = request.query.fullName;
     if (!search) {
         return response.status(400).json({ error: "Username query parameter is required" });
     }
@@ -145,7 +145,7 @@ userRoutes.route("/usersearch").get(async (request, response) => {
         console.log("Search term received:", search); // Log the search term
         let db = database.getDb();
         let data = await db.collection("users").find({
-            firstName: { $regex: search, $options: "i" }}).toArray();
+            fullName: { $regex: search, $options: "i" }}).toArray();
 
         if (data.length > 0) {
             response.json(data);

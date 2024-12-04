@@ -86,7 +86,7 @@ export async function verifyUser(user) {
 
 export async function searchUser(search) {
     try {
-        const response = await axios.get(`${URL}/usersearch`, {params: { firstName: search }});
+        const response = await axios.get(`${URL}/usersearch`, {params: { fullName: search }});
         return response.data;
     } catch (error) {
         const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred";
