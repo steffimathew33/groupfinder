@@ -1,6 +1,7 @@
 import { CreateGroup } from "../components/CreateGroup"
 import { SendRequestButton } from "../components/SendRequest";
 import { RequestsList } from "../components/RequestsReceived";
+import { SearchBar } from "../components/SearchBar";
 
 export function Home() {
     return (
@@ -14,6 +15,9 @@ export function Home() {
             </div>
             <div>
             <RequestsList />
+            </div>
+            <div>
+            <SearchBar />
             </div>
         </>
     );
