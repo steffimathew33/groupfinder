@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { searchUser } from '../api';
+import { Link } from "react-router-dom";
 
 export function SearchBar() {
     const [query, setQuery] = useState('');
@@ -43,7 +44,9 @@ export function SearchBar() {
             ) : (
                 <ul>
                     {results.map((user) => (
-                        <li key={user._id}>{user.firstName} {user.lastName}</li>  // Display user names
+                        <li key={user._id}>{user.firstName} {user.lastName} {' '}
+                        <Link to={`/profile/${user._id}`}>View Profile</Link>
+                        </li>  // Display user names
                     ))}
                 </ul>
             )}

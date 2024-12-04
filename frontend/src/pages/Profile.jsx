@@ -32,17 +32,17 @@ export function Profile() {
             }
         }
         loadUserData();
-        fetchUserData(); // Call function to fetch user data
+        fetchUserData();
     }, []); // Empty dependency array means this runs once when the component mounts
 
     // Handle error
     if (error) {
-        return <div>Error: {error}</div>; // Show error if fetching fails
+        return <div>Error: {error}</div>;
     }
 
     // Handle loading state
     if (!userData) {
-        return <div>Loading...</div>; // Show loading message while data is being fetched
+        return <div>Loading...</div>;
     }
 
     // Function to handle saving updated data (for now, this is a placeholder)
