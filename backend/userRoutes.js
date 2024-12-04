@@ -49,7 +49,7 @@ userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
 })
 
 //#3 Create one, same route name is acceptable if the http method differs
-userRoutes.route("/users").post(verifyToken, async(request, response) => {
+userRoutes.route("/users").post(async(request, response) => {
     let db = database.getDb()
 
     const emailTaken = await db.collection("users").findOne({email: request.body.email})
