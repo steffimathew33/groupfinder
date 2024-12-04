@@ -1,4 +1,4 @@
-import { createGroup } from "../api"
+import { createGroup, updateUser } from "../api"
 import { useState, useEffect } from "react"
 import { jwtDecode } from "jwt-decode";
 
@@ -13,6 +13,7 @@ export function CreateGroup() {
         maxPeople: "",
         isFull: false
     });
+    const [userData, setUserData] = useState({});
 
     useEffect(() => {
         async function loadCreatorData() {
@@ -21,6 +22,7 @@ export function CreateGroup() {
                 if (token) {
                     const decodedUser = jwtDecode(token);
                     setGroup((prevData) => ({...prevData, createdBy: decodedUser._id}));
+                    setUserData(decodedUser);
                 }
             } catch (error) {
                 alert("Could not verify creator data.")
@@ -54,6 +56,17 @@ export function CreateGroup() {
         if (response.status !== 200) {
             alert("Account could not be created.");
         }
+        const groupId = response.data._id;
+        console.log(groupId);
+        const updatedUser = {
+            ...userData,
+            inGroup: groupId,
+        }
+        let updatedUserResponse = await updateUser(userData._id, updatedUser)
+        if (updatedUserResponse.status === 200) {
+            console.log("User inGroup updated successfully")
+        }
+
         console.log(group);
     };
 

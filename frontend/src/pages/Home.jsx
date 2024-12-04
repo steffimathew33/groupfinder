@@ -6,9 +6,6 @@ import { SearchBar } from "../components/SearchBar";
 export function Home() {
     return (
         <>
-            <div className="create-group">
-                <CreateGroup />
-            </div>
             <div>
             <h1>Test Group Request</h1>
             <SendRequestButton />
@@ -19,6 +16,10 @@ export function Home() {
             <div>
             <SearchBar />
             </div>
+            <div className="create-group">
+                <CreateGroup />
+            </div>
+            
         </>
     );
 }

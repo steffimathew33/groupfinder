@@ -5,6 +5,7 @@ const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a Obj
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { verifyToken } = require('./auth');
+const { mongo } = require("mongoose");
 require("dotenv").config({path: "./config.env"});
 
 let userRoutes = express.Router();
@@ -95,8 +96,7 @@ userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            signupDate: request.body.signupDate,
-            inGroup: request.body.group
+            inGroup: new ObjectId(request.body.group)
         }
     }
     let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)
