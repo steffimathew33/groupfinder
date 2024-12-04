@@ -6,12 +6,14 @@ export function SearchBar() {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
     };
     
     const handleSearch = async () => {
+        setHasSearched(true);
         if (!query.trim()) return; // Prevent empty searches
 
         setLoading(true);
@@ -39,7 +41,7 @@ export function SearchBar() {
 
             {loading && <p>Loading...</p>}
 
-            {results.length === 0 ? (
+            {hasSearched && results.length === 0 ? (
                 <p>No users found</p>  // Show message if no results
             ) : (
                 <ul>
