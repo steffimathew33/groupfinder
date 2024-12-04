@@ -66,6 +66,7 @@ userRoutes.route("/users").post(verifyToken, async(request, response) => {
             password: hash,
             firstName: request.body.firstName,
             lastName: request.body.lastName,
+            fullName: request.body.firstName + " " + request.body.lastName,
             major: request.body.major,
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
@@ -90,6 +91,7 @@ userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
             password: request.body.password,
             firstName: request.body.firstName,
             lastName: request.body.lastName,
+            fullName: request.body.firstName + " " + request.body.lastName,
             major: request.body.major,
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
@@ -118,7 +120,7 @@ userRoutes.route("/users/login").post(async(request, response) => {
     //Find the email, then check passwords
     const user = await db.collection("users").findOne({email: request.body.email})
 
-    if (user) {
+    if (user && request.body.password !== null) {
         let checkPassword = await bcrypt.compare(request.body.password, user.password);
         if (checkPassword) {
             const token = jwt.sign(user, process.env.SECRETKEY, {expiresIn: "1h"}); //Encode user data into a jsonwebtoken for page authentication
