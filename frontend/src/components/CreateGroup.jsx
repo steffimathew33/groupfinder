@@ -1,8 +1,9 @@
-import { createGroup } from "../api"
+import { createGroup, updateUser } from "../api"
 import { useState, useEffect } from "react"
 import { jwtDecode } from "jwt-decode";
 
 export function CreateGroup() {
+    
 
     const [group, setGroup] = useState({
         groupName: "",
@@ -13,6 +14,7 @@ export function CreateGroup() {
         maxPeople: "",
         isFull: false
     });
+    const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         async function loadCreatorData() {
@@ -20,6 +22,7 @@ export function CreateGroup() {
                 const token = sessionStorage.getItem("User");
                 if (token) {
                     const decodedUser = jwtDecode(token);
+                    setUserData(decodedUser);
                     setGroup((prevData) => ({...prevData, createdBy: decodedUser._id}));
                 }
             } catch (error) {
@@ -54,10 +57,26 @@ export function CreateGroup() {
         if (response.status !== 200) {
             alert("Account could not be created.");
         }
+        const groupId = response.data._id;
+        
+        const updatedUser = {
+            ...userData,  // Spread the entire user data
+            inGroup: groupId  // Modify only the `inGroup` field (group in this case)
+        };
+        // Update the user's inGroup field with the newly created group ID
+        let userUpdateResponse = await updateUser(userData._id, updatedUser);
+        
+        if (userUpdateResponse.status === 200) {
+            console.log("User's inGroup updated successfully");
+        } else {
+            console.log("Failed to update user's inGroup");
+        }
         console.log(group);
     };
 
     return (
+        <div className="group-container">
+            <div className="group-input">
         <form onSubmit={handleSubmit}>
             <input
                 type="text"
@@ -96,5 +115,7 @@ export function CreateGroup() {
             />
             <button type="submit">Create Group</button>
         </form>
+        </div>
+        </div>
     );
 }

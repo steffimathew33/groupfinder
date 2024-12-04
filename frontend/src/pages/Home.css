@@ -1,0 +1,186 @@
+@import url('Base.css');
+
+/* Profile Styles */
+
+/* Container for both pages */
+.home-page-container1 {
+    display: flex;
+    flex-direction: row; /* Arrange children horizontally (side by side) */
+    justify-content: space-between; /* Optional: Space between the two sections */
+    align-items: flex-start; /* Align items to the top */
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    padding: 250px; /* Add some padding to prevent the content from touching the edges */
+}
+
+.home-page-container2 {
+    display: flex;
+    flex-direction: row; /* Arrange children horizontally (side by side) */
+    justify-content: space-between; /* Optional: Space between the two sections */
+    align-items: flex-start; /* Align items to the top */
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    padding: 250px; /* Add some padding to prevent the content from touching the edges */
+}
+
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling for the group container (matches edit-profile-container style) */
+.group-container {
+    width: 400px;  /* Set a fixed width similar to the edit-profile container */
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9; /* Light background */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center; /* Center content */
+    margin-top: 50px; /* Add some space from the top */
+}
+
+/* Styling for the group input fields (matches edit-profile-form style) */
+.group-input {
+    width: 100%; /* Full width for input fields */
+    padding: 20px;
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;  /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Form fields styling (matching edit-profile-form labels) */
+.group-input label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+}
+
+/* Input fields and textareas */
+.group-input input,
+.group-input textarea {
+    width: 90%; /* Makes input fields fit nicely */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box; /* Prevents padding from affecting total width */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Button styling (matching edit-profile-buttons) */
+.group-input button {
+    background-color: #007bff;  /* Blue background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.group-input button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Focus effect on inputs */
+.group-input input:focus,
+.group-input textarea:focus {
+    outline: none;
+    border-color: #007bff;  /* Blue border on focus */
+    box-shadow: 0px 0px 4px rgba(0, 123, 255, 0.5);  /* Blue glow on focus */
+}
+
+/* Styling for request-container to match group-container format */
+.request-container {
+    width: 400px;  /* Set a fixed width for consistency */
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Request list item style (matching request-detail) */
+.request-detail {
+    background-color: #fff; /* White background for the item */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-top: 15px;
+    margin-bottom: 10px;
+    width: 100%; /* Full width */
+    max-width: 400px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.request-detail:hover {
+    transform: translateY(-10px); /* Slight lift on hover */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* More intense shadow on hover */
+}
+
+
+/* Navigation Bar */
+.navbar .navItem {
+    text-decoration: none; /* Remove underline if any */
+    display: inline-block; /* Ensure links behave like blocks for styling */
+    border: 1px solid transparent; /* Avoid any default border */
+}
+
+.navbar-container {
+    background-color: #2774AE; /* Darker blue for hover effect */
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    padding: 30px;
+}
+
+.navbar-logout-button {
+    font-size: 1rem;             /* Adjust font size to match design */
+    width: auto;                 /* Allow width to be adjusted automatically */
+    display: flex;              /* Enable Flexbox inside the form */
+    flex-direction: column;     /* Stack form elements vertically */
+    align-items: center;        /* Center the items horizontally inside the form */
+    justify-content: center;    /* Center the items vertically inside the form  */
+}
+
+.swipe-right button {
+    background-color: green; /* Golden button */
+    color: #000000; /* Black text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.swipe-container {
+    width: 400px;  /* Set a fixed width for consistency */
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+    margin-top: 50px;
+}
+
+button:hover {
+    background-color: lightgreen; /* Light blue hover effect */
+}

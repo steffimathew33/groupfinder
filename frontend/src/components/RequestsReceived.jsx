@@ -96,8 +96,11 @@ export function RequestsList() {
      }
 
     return (
-        <div>
-            <h2>Your Requests</h2>
+        <div className="request-container">
+            <div className="request-detail">
+                <div className="request-title">
+                    <h1>Requests</h1>
+                </div>
             {requests.length === 0 ? (
                 <p>No requests found.</p>
             ) : (
@@ -121,6 +124,7 @@ export function RequestsList() {
                     })}
                 </ul>
             )}
+        </div>
         </div>
     );
 }
