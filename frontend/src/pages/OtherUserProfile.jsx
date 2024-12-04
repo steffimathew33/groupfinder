@@ -1,35 +1,25 @@
 import './Profile.css';
 import React, { useState, useEffect } from "react";
-import { getUser } from "../api"; // Ensure the path is correct to your api.js
-import { jwtDecode } from "jwt-decode";
+import { getUser } from "../api";
+import { useParams } from 'react-router-dom';
 
-export function Profile() {
-    const [userData, setUserData] = useState(null); // To store the fetched user data
-    const [error, setError] = useState(null); // To handle any errors
-
-    let userId = ""; // Steffi Mathew's user ID from the MongoDB screenshot
+export function OtherUserProfile() {
+    const {id} = useParams();
+    const [userData, setUserData] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function loadUserData() {
-            const token = sessionStorage.getItem("User");
-            if (token) {
-                const decodedUser = jwtDecode(token);
-                userId = decodedUser._id;
-            }
-        }
         async function fetchUserData() {
             try {
-                const data = await getUser(userId); // Get user data by ID
-                console.log(data); // Log for debugging
-                setUserData(data); // Set the fetched data
+                const data = await getUser(id);
+                setUserData(data);
             } catch (err) {
                 setError("Failed to fetch user data");
-                console.error(err); // Log error for debugging
+                console.error(err);
             }
         }
-        loadUserData();
         fetchUserData();
-    }, []); // Empty dependency array means this runs once when the component mounts
+    }, []);
 
     if (error) {
         return <div>Error: {error}</div>;
