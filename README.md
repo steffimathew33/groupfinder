@@ -8,7 +8,25 @@ Start off by cloning our repo.
 git clone https://github.com/steffimathew33/groupfinder.git
 ```
 
-?????????? insert more instructions here regarding installation. npm install to install node modules? idk what i am missing
+
+Download Node.js from this link: https://nodejs.org/en/download/prebuilt-installer.
+
+
+??????????????? insert more instructions here regarding installation. npm install to install node modules? idk what i am missing
+
+
+Navigate to the backend folder and install the necessary node modules.
+```bash
+cd backend
+npm install
+```
+
+
+Navigate to the frontend folder and install the necessary node modules.
+```bash
+cd frontend
+npm install
+```
 
 
 In your terminal, navigate to the backend folder and start up the server:
@@ -17,15 +35,18 @@ cd backend
 node server.js
 ```
 
+
 In a separate terminal, navigate to the frontend folder to start up the app:
 ```bash
 cd frontend
 npm start
 ```
 
+
 You will be prompted with the message: `Would you like to run the app on another port instead? » (Y/n)`
 
 Answer with `Y` 
+
 
 And there you go! Your server and your app should be running on two different ports. You can view the website in your browser at http://localhost:3001.
 
@@ -34,6 +55,9 @@ We created this app to help future CS35L students find a group for their project
 
 ## Contributors
 Katie Dinh
+
 Alyssa Ko
+
 Steffi Mathew
+
 Tyler Taylor
