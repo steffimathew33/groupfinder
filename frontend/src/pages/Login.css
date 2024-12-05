@@ -2,13 +2,14 @@
 @import url('Base.css');
 
 .login-page-container {
-    margin-top: 110px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 260px;
     text-align: center;
 }
+
 
 /* Login input form container */
 .login-input {
@@ -82,3 +83,33 @@
     align-items: center;        /* Center the items horizontally inside the form */
     justify-content: center;    /* Center the items vertically inside the form */
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap');
+
+.title-group {
+    color: #2160c2; /* Navy blue */
+}
+
+.title-finder {
+    color: #ffd000; /* Gold */
+}
+
+.login-page-container .title {
+    font-family: 'Pacifico', cursive; /* Use a stylish Google font */
+    font-size: 6rem; /* Adjust size */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    margin-bottom: 0px;
+    margin-top: 60px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+.login-page-container .login-title {
+    font-family: 'Lato'; /* Use a stylish Google font */
+    font-size: 1rem; /* Adjust size */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    margin-bottom: 0px;
+    margin-top: -20px;
+}
+
+

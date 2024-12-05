@@ -36,7 +36,7 @@ export function LoginUser() {
         <div className="login-page-container">
             <div className="login-input">
                 <div className="login-title">
-                    <h1>Login</h1>
+                    <h1>Log in</h1>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="login-email">
