@@ -28,7 +28,15 @@ cd frontend
 npm install
 ```
 
+You will also need a ___? to access the information from the server. 
+Navigate to your backend folder and create a file called config.env
+```bash
+cd backend
+echo "____ GET THIS FROM KATIE____" > config.env
+```
 
+
+## Starting up the website
 In your terminal, navigate to the backend folder and start up the server:
 ```bash
 cd backend
