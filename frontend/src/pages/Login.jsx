@@ -13,6 +13,11 @@ export function Login() {
         {/*If the view is 0, show the login page with a button to switch views, it's an if statement basically using ?*/}
             {!view ?
                 <div className = "login-page-container">
+                    <div className="title">
+                        <span className="title-group">group</span>
+                        <span className="title-finder">finder</span>
+                    </div>
+
                     <LoginUser/>
                     <div className = "new-account-button">
                         <button onClick={() => setView(!view)}>Create New Account</button>

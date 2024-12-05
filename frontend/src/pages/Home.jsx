@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"; // Import JWT Decode
 import { CreateGroup } from "../components/CreateGroup";
-import { SendRequestButton } from "../components/SendRequest";
+import { SendRequestButton } from "../components/SwipePanel";
 import { RequestsList } from "../components/RequestsReceived";
 import "./Home.css"; // Import the CSS file for styling
 

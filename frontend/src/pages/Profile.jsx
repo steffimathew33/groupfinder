@@ -144,7 +144,7 @@ export function Profile() {
                             />
                         </label>
                         <label>
-                            Bio:
+                            Bio:<br></br>
                             <textarea
                                 name="bio"
                                 value={userData.bio || ""}
