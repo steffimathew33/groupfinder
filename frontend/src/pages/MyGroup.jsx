@@ -53,15 +53,18 @@ export function MyGroup() {
         setMembers(member);
     }
 
+    const membersCount = group.members?.length || 0; // Fallback to 0 if undefined
+    const membersNeeded = group.maxPeople - membersCount || 0; // Fallback to 0 if undefined
+
     return (
         <div className="my-group">
             <h1 style={{ textDecoration: 'underline'}}> My Group</h1>
             <h2>{group.groupName || "No Group"}</h2> {/* Display the group name */}
             <h3>Group Size: {group.maxPeople}</h3>
             <h4>
-                Current Members: {group.members.length} 
+                Current Members: {membersCount} 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                Members Needed: {group.maxPeople - group.members.length}
+                Members Needed: {membersNeeded}
             </h4>
             
             <div className="group-info">

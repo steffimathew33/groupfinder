@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { jwtDecode } from "jwt-decode";
 
 export function CreateGroup() {
+    
 
     const [group, setGroup] = useState({
         groupName: "",
@@ -21,6 +22,7 @@ export function CreateGroup() {
                 const token = sessionStorage.getItem("User");
                 if (token) {
                     const decodedUser = jwtDecode(token);
+                    setUserData(decodedUser);
                     setGroup((prevData) => ({...prevData, createdBy: decodedUser._id}));
                     setUserData(decodedUser);
                 }
@@ -71,6 +73,8 @@ export function CreateGroup() {
     };
 
     return (
+        <div className="group-container">
+            <div className="group-input">
         <form onSubmit={handleSubmit}>
             <input
                 type="text"
@@ -109,5 +113,7 @@ export function CreateGroup() {
             />
             <button type="submit">Create Group</button>
         </form>
+        </div>
+        </div>
     );
 }
