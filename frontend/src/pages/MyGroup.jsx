@@ -77,10 +77,11 @@ export function MyGroup() {
                             {member.firstName} {member.lastName}
                         </button>
                     </div>
+                    
                 ))}
-                
             </div>
         </div>
+        
     );
 }
 

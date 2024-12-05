@@ -36,7 +36,7 @@ userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
 
     //Checking how many properties (keys) are in the data object returned from findOne
     if (Object.keys(data).length > 0) {
-        response.json(data);
+        response.json(data); 
     } else {
         throw new Error("Data is an empty array.");
     }
