@@ -5,6 +5,7 @@ const ObjectId = require("mongodb").ObjectId //Because Mongo stores ids in a Obj
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { verifyToken } = require('./auth');
+const { mongo } = require("mongoose");
 require("dotenv").config({path: "./config.env"});
 
 let userRoutes = express.Router();
@@ -30,7 +31,6 @@ userRoutes.route("/users").get(verifyToken, async(request, response) => {
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
 userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
-    console.log("Received request with ID:", request.params.id);  // Log the ID being passed
     let db = database.getDb()
 
     // Check if the id is a valid ObjectId
@@ -42,7 +42,7 @@ userRoutes.route("/users/:id").get(verifyToken, async(request, response) => {
 
     //Checking how many properties (keys) are in the data object returned from findOne
     if (Object.keys(data).length > 0) {
-        response.json(data);
+        response.json(data); 
     } else {
         throw new Error("Data is an empty array.");
     }
@@ -96,8 +96,7 @@ userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            signupDate: request.body.signupDate,
-            inGroup: request.body.group
+            inGroup: new ObjectId(request.body.group)
         }
     }
     let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)
@@ -142,7 +141,6 @@ userRoutes.route("/usersearch").get(async (request, response) => {
     }
 
     try {
-        console.log("Search term received:", search); // Log the search term
         let db = database.getDb();
         let data = await db.collection("users").find({
             fullName: { $regex: search, $options: "i" }}).toArray();

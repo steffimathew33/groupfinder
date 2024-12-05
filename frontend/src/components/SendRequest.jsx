@@ -34,8 +34,11 @@ export function SendRequestButton() {
     };
 
     return (
+        <div className="swipe-container">
+        <div className="swipe-right">
         <button onClick={sendRequest}>
-            Send Request to Steffi
         </button>
+        </div>
+        </div>
     );
 }

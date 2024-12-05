@@ -1,8 +1,9 @@
-import { createGroup } from "../api"
+import { createGroup, updateUser } from "../api"
 import { useState, useEffect } from "react"
 import { jwtDecode } from "jwt-decode";
 
 export function CreateGroup() {
+    
 
     const [group, setGroup] = useState({
         groupName: "",
@@ -13,6 +14,7 @@ export function CreateGroup() {
         maxPeople: "",
         isFull: false
     });
+    const [userData, setUserData] = useState({});
 
     useEffect(() => {
         async function loadCreatorData() {
@@ -20,7 +22,9 @@ export function CreateGroup() {
                 const token = sessionStorage.getItem("User");
                 if (token) {
                     const decodedUser = jwtDecode(token);
+                    setUserData(decodedUser);
                     setGroup((prevData) => ({...prevData, createdBy: decodedUser._id}));
+                    setUserData(decodedUser);
                 }
             } catch (error) {
                 alert("Could not verify creator data.")
@@ -54,10 +58,23 @@ export function CreateGroup() {
         if (response.status !== 200) {
             alert("Account could not be created.");
         }
+        const groupId = response.data._id;
+        console.log(groupId);
+        const updatedUser = {
+            ...userData,
+            inGroup: groupId,
+        }
+        let updatedUserResponse = await updateUser(userData._id, updatedUser)
+        if (updatedUserResponse.status === 200) {
+            console.log("User inGroup updated successfully")
+        }
+
         console.log(group);
     };
 
     return (
+        <div className="group-container">
+            <div className="group-input">
         <form onSubmit={handleSubmit}>
             <input
                 type="text"
@@ -96,5 +113,7 @@ export function CreateGroup() {
             />
             <button type="submit">Create Group</button>
         </form>
+        </div>
+        </div>
     );
 }
