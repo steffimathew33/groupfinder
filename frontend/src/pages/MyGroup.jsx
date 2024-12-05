@@ -76,9 +76,11 @@ export function MyGroup() {
                         <button className="peopleButton"onClick={() => handleClick(member)}>
                             {member.firstName} {member.lastName}
                         </button>
-                    </div>
-                    
+                    </div> 
                 ))}
+            <button className="leaveGroup"onClick={() => handleClick()}>
+                Leave Group
+            </button>
             </div>
         </div>
         
