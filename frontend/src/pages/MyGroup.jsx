@@ -3,8 +3,12 @@ import { getUser} from "../api"
 import { getGroup } from "../api";
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { updateGroup, updateUser } from "../api"
+
 
 export function MyGroup() {
+    const [originalGroup, setOriginalGroup] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
     const [group, setGroup] = useState(null); // State to store group data
     const [error, setError] = useState(null); // State to handle any error
     const [members, setMembers] = useState([]);
@@ -13,12 +17,14 @@ export function MyGroup() {
             const token = sessionStorage.getItem("User");
             if (token) {
                 const decodedUser = jwtDecode(token);
+                setCurrentUser(decodedUser);
                 const groupId = decodedUser.inGroup;
 
                 if (groupId != null) {
                     try {
                         // Fetch the group data based on groupId
                         const groupData = await getGroup(groupId);
+                        setOriginalGroup(groupData);
                         setGroup(groupData); // Set the fetched group data
 
                         const memberDetails = await Promise.all(
@@ -49,11 +55,41 @@ export function MyGroup() {
         return <div>Loading...</div>;
     }
 
+
     const handleClick = (member) => {
         setMembers(member);
     }
 
+    const leaveGroup = async () => {
+        const updatedUser = {
+            ...currentUser,
+            inGroup: null,
+        }
+
+        try {
+            let userResult = await updateUser(currentUser._id, updatedUser);
+            if (userResult.status === 200) {
+                console.log("user data updated successfully");
+            }
+
+            const updatedGroup = {
+                ...originalGroup,
+                members: originalGroup.members.filter((memberId) => memberId !== currentUser._id),
+            };
+
+            let groupResult = await updateGroup(originalGroup._id,updatedGroup);
+            
+            if (groupResult.status === 200) {
+                console.log("group updated");
+            }
+
+            } catch (err) {
+                console.error("error while leaving group")
+            }
+    }
+    
     return (
+
         <div className="my-group">
             <h1 style={{ textDecoration: 'underline'}}> My Group</h1>
             <h2>{group.groupName || "No Group"}</h2> {/* Display the group name */}
@@ -78,7 +114,7 @@ export function MyGroup() {
                         </button>
                     </div> 
                 ))}
-            <button className="leaveGroup"onClick={() => handleClick()}>
+            <button className="leaveGroup"onClick={() => handleClick(leaveGroup)}>
                 Leave Group
             </button>
             </div>
