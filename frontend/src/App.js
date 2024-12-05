@@ -8,6 +8,7 @@ import {HashRouter as Router, Routes, Route} from "react-router-dom"
 import { Home } from './pages/Home'
 import { Login } from './pages/Login'
 import { Profile } from './pages/Profile'
+import { MyGroup } from './pages/MyGroup';
 import { OtherUserProfile } from './pages/OtherUserProfile';
 
 //navbar and layout 
@@ -51,6 +52,7 @@ function App() {
           
           <Route path="/home" element={<Home/>}/>
           <Route path="/profile" element={<Profile/>}/>
+          <Route path="/mygroup" element={<MyGroup/>}/>
           <Route path="/profile/:id" element={<OtherUserProfile />} />
 
         </Route>

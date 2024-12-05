@@ -9,5 +9,10 @@ export const pageData = [
     {
         name: "Profile",
         path: "/profile"
+    },
+    {
+        name: "MyGroup",
+        path: "/mygroup"
+
     }
 ]
