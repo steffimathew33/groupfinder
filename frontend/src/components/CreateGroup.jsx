@@ -14,11 +14,7 @@ export function CreateGroup() {
         maxPeople: "",
         isFull: false
     });
-<<<<<<< HEAD
-    const [userData, setUserData] = useState(null);
-=======
     const [userData, setUserData] = useState({});
->>>>>>> 75926860bea16422cbfb012e320771becaff53a7
 
     useEffect(() => {
         async function loadCreatorData() {
@@ -63,21 +59,6 @@ export function CreateGroup() {
             alert("Account could not be created.");
         }
         const groupId = response.data._id;
-<<<<<<< HEAD
-        
-        const updatedUser = {
-            ...userData,  // Spread the entire user data
-            inGroup: groupId  // Modify only the `inGroup` field (group in this case)
-        };
-        // Update the user's inGroup field with the newly created group ID
-        let userUpdateResponse = await updateUser(userData._id, updatedUser);
-        
-        if (userUpdateResponse.status === 200) {
-            console.log("User's inGroup updated successfully");
-        } else {
-            console.log("Failed to update user's inGroup");
-        }
-=======
         console.log(groupId);
         const updatedUser = {
             ...userData,
@@ -88,7 +69,6 @@ export function CreateGroup() {
             console.log("User inGroup updated successfully")
         }
 
->>>>>>> 75926860bea16422cbfb012e320771becaff53a7
         console.log(group);
     };
 
