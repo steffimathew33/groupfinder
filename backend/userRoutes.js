@@ -159,7 +159,7 @@ userRoutes.route("/getuser").get(async (request, response) => {
 
     try {
         let db = database.getDb();
-        let data = await db.collection("users").aggregate([{ $sample: { size: 1 } }]).toArray();
+        let data = await db.collection("users").aggregate([{$match: { inGroup: null }},{ $sample: { size: 1 } }]).toArray();
         data = data[0];
 
         if (data) {
