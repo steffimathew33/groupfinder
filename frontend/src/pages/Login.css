@@ -11,9 +11,8 @@
 }
 
 
-/* Login input form container */
 .login-input {
-    background-color: #FFFFFF; /* White background for the profile */
+    background-color: #FFFFFF;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -22,25 +21,24 @@
     margin-top: 20px;
 }
 
-/* Styling the button inside login-input */
 .login-button {
-    padding: 20px;           /* Adjust padding to reduce button size */
-    font-size: 1rem;             /* Adjust font size to match design */
-    width: auto;                 /* Allow width to be adjusted automatically */
-    display: flex;              /* Enable Flexbox inside the form */
-    flex-direction: column;     /* Stack form elements vertically */
-    align-items: center;        /* Center the items horizontally inside the form */
-    justify-content: center;    /* Center the items vertically inside the form */
+    padding: 20px;           
+    font-size: 1rem;            
+    width: auto;                
+    display: flex;             
+    flex-direction: column;    
+    align-items: center;       
+    justify-content: center;   
 }
 
 .new-account-button {
     padding: 20px;
-    font-size: 1rem;             /* Adjust font size to match design */
-    width: auto;                 /* Allow width to be adjusted automatically */
-    display: flex;              /* Enable Flexbox inside the form */
-    flex-direction: column;     /* Stack form elements vertically */
-    align-items: center;        /* Center the items horizontally inside the form */
-    justify-content: center;    /* Center the items vertically inside the form */
+    font-size: 1rem;          
+    width: auto;              
+    display: flex;            
+    flex-direction: column;    
+    align-items: center;      
+    justify-content: center;  
 }
 
 .create-page-container {
@@ -54,7 +52,7 @@
 
 /* Login input form container */
 .create-input {
-    background-color: #FFFFFF; /* White background for the profile */
+    background-color: #FFFFFF; 
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -63,41 +61,40 @@
     margin-top: 20px;
 }
 
-/* Styling the button inside login-input */
 .create-button {
-    padding: 20px;           /* Adjust padding to reduce button size */
-    font-size: 1rem;             /* Adjust font size to match design */
-    width: auto;                 /* Allow width to be adjusted automatically */
-    display: flex;              /* Enable Flexbox inside the form */
-    flex-direction: column;     /* Stack form elements vertically */
-    align-items: center;        /* Center the items horizontally inside the form */
-    justify-content: center;    /* Center the items vertically inside the form */
+    padding: 20px;          
+    font-size: 1rem;         
+    width: auto;             
+    display: flex;           
+    flex-direction: column;   
+    align-items: center;     
+    justify-content: center; 
 }
 
 .already-user-button {
     padding: 20px;
-    font-size: 1rem;             /* Adjust font size to match design */
-    width: auto;                 /* Allow width to be adjusted automatically */
-    display: flex;              /* Enable Flexbox inside the form */
-    flex-direction: column;     /* Stack form elements vertically */
-    align-items: center;        /* Center the items horizontally inside the form */
-    justify-content: center;    /* Center the items vertically inside the form */
+    font-size: 1rem;            
+    width: auto;                
+    display: flex;             
+    flex-direction: column;     
+    align-items: center;       
+    justify-content: center;   
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap');
 
 .title-group {
-    color: #2160c2; /* Navy blue */
+    color: #2160c2;
 }
 
 .title-finder {
-    color: #ffd000; /* Gold */
+    color: #ffd000; 
 }
 
 .login-page-container .title {
-    font-family: 'Pacifico', cursive; /* Use a stylish Google font */
-    font-size: 6rem; /* Adjust size */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    font-family: 'Pacifico', cursive; 
+    font-size: 6rem; 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
     margin-bottom: 0px;
     margin-top: 60px;
 }
@@ -105,9 +102,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 .login-page-container .login-title {
-    font-family: 'Lato'; /* Use a stylish Google font */
-    font-size: 1rem; /* Adjust size */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    font-family: 'Lato'; 
+    font-size: 1rem; 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
     margin-bottom: 0px;
     margin-top: -20px;
 }
