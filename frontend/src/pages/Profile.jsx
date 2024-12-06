@@ -5,12 +5,12 @@ import { updateUser } from "../api"
 import { jwtDecode } from "jwt-decode";
 
 export function Profile() {
-    const [userData, setUserData] = useState(null); // To store the fetched user data
-    const [error, setError] = useState(null); // To handle any errors
-    const [view1, setView1] = useState(0); // To toggle between views
-    const [originalData, setOriginalData] = useState(null); // To store the original data fetched from the database
+    const [userData, setUserData] = useState(null); // local user data
+    const [error, setError] = useState(null); 
+    const [view1, setView1] = useState(0); // toggle between profile and edit profile view
+    const [originalData, setOriginalData] = useState(null); // to store original data fetched from mongoDB
 
-    let userId = ""; // User ID from session
+    let userId = "";
 
     useEffect(() => {
         async function loadUserData() {
