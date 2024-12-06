@@ -1,4 +1,4 @@
-import { sendGroupRequest, getUser, getRandomUser } from "../api";
+import { sendGroupRequest, getRandomUser } from "../api";
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
@@ -24,6 +24,8 @@ export function SendRequestButton() {
             const decodedUser = jwtDecode(token); // Decode the JWT token to get user details
             setRequestData((prevData) => ({ ...prevData, senderId: decodedUser._id, groupId: decodedUser.inGroup }));
             setLoading(false);
+            const random = await getRandomUser();
+            setRandUser(random);
         }
         loadUserData();
     }, []);
@@ -33,15 +35,20 @@ export function SendRequestButton() {
     }
     // Function to send a group request
     const sendRequest = async () => {
-        setRequestData((prevData) => ({...prevData, recipientUserId: randUser._id}));
+        const updatedRequestData = {
+            ...requestData,
+            recipientUserId: randUser._id,
+        };
         try {
-            const response = await sendGroupRequest(requestData.groupId, requestData);
+            const response = await sendGroupRequest(requestData.groupId, updatedRequestData);
             alert(response.data.message);
             console.log(requestData);
         } catch (error) {
             console.error(error);
             alert(error.response?.data?.message || "An error occurred");
         }
+
+        switchPerson();
     };
 
     async function switchPerson() {
