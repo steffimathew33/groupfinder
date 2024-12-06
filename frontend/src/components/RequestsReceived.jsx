@@ -29,8 +29,6 @@ export function RequestsList() {
                         console.log(req.senderId, req.groupId, req.recipientUserId);
                         const user = await getUser(req.senderId);
                         const recip = await getUser(req.recipientUserId);
-                        console.log(user);
-                        console.log(recip)
                         const group = await getGroup(req.groupId);
                         
                         usersData.push({

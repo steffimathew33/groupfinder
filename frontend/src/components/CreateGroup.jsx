@@ -22,7 +22,6 @@ export function CreateGroup() {
                 const token = sessionStorage.getItem("User");
                 if (token) {
                     const decodedUser = jwtDecode(token);
-                    setUserData(decodedUser);
                     setGroup((prevData) => ({...prevData, createdBy: decodedUser._id}));
                     setUserData(decodedUser);
                 }
@@ -58,7 +57,7 @@ export function CreateGroup() {
         if (response.status !== 200) {
             alert("Account could not be created.");
         }
-        const groupId = response.groupId;
+        const groupId = response.data.groupId;
         console.log(groupId);
         const updatedUser = {
             ...userData,
@@ -68,8 +67,6 @@ export function CreateGroup() {
         if (updatedUserResponse.status === 200) {
             console.log("User inGroup updated successfully")
         }
-
-        console.log(group);
     };
 
     return (

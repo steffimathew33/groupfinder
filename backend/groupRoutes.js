@@ -27,9 +27,7 @@ groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
         let db = database.getDb()
         //findOne returns an object, not a Cursor
         let d = new ObjectId(request.params.id);
-        console.log(d);
         let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
-        console.log(data);
 
         if (data) {
             response.json(data);
@@ -37,7 +35,7 @@ groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
             throw new Error("Data is an empty array.");
         }
     } catch (error) {
-        console.log("FUCK")
+        console.log("Something went wrong with retrieving a group.")
     }
 });
 //#3 Create one
