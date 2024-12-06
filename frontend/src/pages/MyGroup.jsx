@@ -3,6 +3,7 @@ import { getUser } from "../api";
 import { getGroup } from "../api";
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { Link } from 'react-router-dom';  // Import Link for navigation
 import LeaveGroupButton from '../components/LeaveGroup';
 
 export function MyGroup() {
@@ -125,19 +126,24 @@ export function MyGroup() {
             <div className='members-list'>
                 {members.map((member, index) => (
                     <div key={index} className="member-card">
-                        <button className="peopleButton" onClick={() => handleClick(member)}>
-                            {member.firstName} {member.lastName}
-                        </button>
+                        {/* Wrap the button with a Link component */}
+                        <Link to={`/profile/${member._id}`} className="link-button">
+                            <button className="peopleButton">
+                                {member.firstName} {member.lastName}
+                            </button>
+                        </Link>
                     </div>
                 ))}
             </div>
 
             {/* Pass the necessary props to LeaveGroupButton */}
+            <div className="leave-button">
             <LeaveGroupButton 
                 userId={userId}  // Pass userId
                 currentGroupId={currentGroupId}  // Pass currentGroupId
                 onLeaveSuccess={onLeaveSuccess}  // Pass onLeaveSuccess callback
             />
+            </div>
         </div>
     );
 }

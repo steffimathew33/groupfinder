@@ -8,6 +8,7 @@ html, body {
     height: 100%; /* Ensure the body and html fill the entire height */
 }
 
+
 .profile-container {
     display: flex;
     flex-direction: column;
