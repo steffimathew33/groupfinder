@@ -155,4 +155,22 @@ userRoutes.route("/usersearch").get(async (request, response) => {
     }
 });
 
+userRoutes.route("/getuser").get(async (request, response) => {
+
+    try {
+        let db = database.getDb();
+        let data = await db.collection("users").aggregate([{ $sample: { size: 1 } }]).toArray();
+        data = data[0];
+
+        if (data) {
+            response.json(data);
+        } else {
+            response.status(404).json({ message: "No users found matching the criteria." });
+        }
+    } catch (error) {
+        response.status(500).json({ error: error.message });
+    }
+
+});
+
 module.exports = userRoutes;

@@ -94,6 +94,16 @@ export async function searchUser(search) {
     }
 }
 
+export async function getRandomUser() {
+    try {
+        const response = await axios.get(`${URL}/getuser`);
+        return response.data;
+    } catch (error) {
+        const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred";
+        alert(`Error: ${errorMessage}`);
+    }
+}
+
 
 // GROUP FUNCTIONALITY
 
