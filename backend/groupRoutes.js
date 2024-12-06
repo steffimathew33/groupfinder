@@ -200,7 +200,7 @@ groupRoutes.route("/groups/:groupId/acceptRequest").patch(async (request, respon
     }
 
     // Add the sender to the group's members
-    group.members.push(request.body.senderId);
+    group.members.push(request.body.recipientUserId); //THIS SHOULD BE RECIPIENTUSERID, WAS PREVIOSULY SENDERID
     group.currentMembers += 1;
 
     const isFull = group.members.length === group.maxPeople;
