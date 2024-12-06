@@ -1,7 +1,7 @@
 import { CreateUser } from "../components/CreateUser"
 import { LoginUser } from "../components/LoginComp"
 import { useState } from "react"
-import "./Login.css"; // Import the CSS file for styling
+import "./Login.css"; 
 
 export function Login() {
 
