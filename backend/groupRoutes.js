@@ -108,7 +108,6 @@ groupRoutes.route("/groups/:groupId/sendRequest").post(async (request, response)
         return response.status(404).json({ message: "User not found" });
     }
 
-    // Create a new request document
     const requestDoc = {
         groupId: new ObjectId(groupId),
         senderId: new ObjectId(request.body.senderId),  // The user who is sending the invite (e.g., group creator)

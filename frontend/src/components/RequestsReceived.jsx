@@ -87,7 +87,6 @@ export function RequestsList() {
         // Delete the request after successful acceptance
         try {
             const deleteResponse = await deleteRequest(requestId);
-            console.log(deleteResponse.message);
             setRequests((prevRequests) => prevRequests.filter((req) => req._id !== requestId)); //Remove the current request from the UI
         } catch (deleteError) {
             console.error("Error deleting the request:", deleteError.message);
