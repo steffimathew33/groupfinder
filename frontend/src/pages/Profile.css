@@ -1,15 +1,25 @@
-
 @import url('Base.css');
 
 /* Profile Styles */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure the body and html fill the entire height */
+}
 
 .profile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
+    justify-content: flex-start; /* Align content to the top */
     text-align: center;
+    margin-top: 2rem; /* Reduced space between title and top of the page */
+    flex-grow: 1; /* Allow this section to grow if needed */
+}
+
+.profile-title {
+    margin-top: 0; /* Remove extra margin on title */
 }
 
 .profile-details {
@@ -19,17 +29,20 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    margin-top: 5px;
+    margin-top: 1rem;
+    word-wrap: break-word; /* Break long words onto the next line */
+    overflow-wrap: break-word;
+    white-space: normal; /* Allow wrapping of text */
 }
 
 .profile-image {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin-bottom: 20px;
     object-fit: cover;
     border: 4px solid #2774AE; /* Blue border around the image */
 }
+
 
 /* Navigation Bar */
 .navbar .navItem {
@@ -44,18 +57,43 @@
     justify-content: space-between;
     width: 100%;
     position: fixed;
-    padding: 30px;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100; /* Ensure navbar stays on top */
+    height: 60px; /* Navbar height */
 }
 
-.navbar-logout-button {
-    font-size: 1rem;             /* Adjust font size to match design */
-    width: auto;                 /* Allow width to be adjusted automatically */
-    display: flex;              /* Enable Flexbox inside the form */
-    flex-direction: column;     /* Stack form elements vertically */
-    align-items: center;        /* Center the items horizontally inside the form */
-    justify-content: center;    /* Center the items vertically inside the form  */
+/* Styling for the search bar */
+.search-bar {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    padding: 20px; /* Add some padding for spacing */
+    text-align: center;
 }
 
+/* Style for search input */
+.search-input {
+    width: 100%; /* Full width for input fields */
+    margin-top: 0; /* Adjust margin for proper positioning */
+}
+
+/* Search input and textarea styling */
+.search-input input,
+.search-input textarea {
+    width: 25%; /* Full width */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box; /* Prevent padding from affecting total width */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+/* Adjustments for smaller screens */
 @media (max-width: 600px) {
     .profile-container {
         padding: 10px;
@@ -81,7 +119,7 @@
 
 .edit-profile-button {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
 }
 
 /* Container for the form */
@@ -94,6 +132,7 @@
     background-color: #f9f9f9;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center; /* Centers content */
+    margin-top: 100px;
 }
 
 /* Form fields styling */

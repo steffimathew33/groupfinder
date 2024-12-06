@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { getUser } from "../api"; 
 import { updateUser } from "../api"
 import { jwtDecode } from "jwt-decode";
+import { SearchBar } from '../components/SearchBar';
 
 export function Profile() {
     const [userData, setUserData] = useState(null); // To store the fetched user data
@@ -93,6 +94,7 @@ export function Profile() {
                     <div className="edit-profile-button">
                         <button onClick={() => setView1(1)}>Edit Profile</button>
                     </div>
+                    <SearchBar />
                 </div>
             ) : (
                 <div className="edit-profile-container">
@@ -144,7 +146,7 @@ export function Profile() {
                             />
                         </label>
                         <label>
-                            Bio:
+                            Bio:<br></br>
                             <textarea
                                 name="bio"
                                 value={userData.bio || ""}

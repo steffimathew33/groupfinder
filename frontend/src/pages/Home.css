@@ -186,7 +186,7 @@ body, .home-page-container1, .home-page-container2 {
 }
 
 button:hover {
-    background-color: lightgreen; /* Light blue hover effect */
+    background-color: lightgrey; /* Light blue hover effect */
 }
 
 .button-row {
@@ -196,37 +196,9 @@ button:hover {
     padding: 10px;
 }
 
-/* Styling for the search bar */
-.search-bar {
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    padding: 20px; /* Add some padding for spacing */
-    text-align: center;
-}
-
-/* Style for search input */
-.search-input {
-    width: 100%; /* Full width for input fields */
-    margin-top: 0; /* Adjust margin for proper positioning */
-}
-
-/* Search input and textarea styling */
-.search-input input,
-.search-input textarea {
-    width: 100%; /* Full width */
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    box-sizing: border-box; /* Prevent padding from affecting total width */
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
 /* Ensure the home-page-container doesn't get pushed under the navbar */
 .home-page-container1, .home-page-container2 {
-    padding-top: 50px; /* Adjust the padding to avoid overlap with navbar */
+    padding-top: 100px; /* Adjust the padding to avoid overlap with navbar */
 }
 
 /* Adjusting the group-container and other sections */
