@@ -22,35 +22,32 @@ export function Profile() {
         }
         async function fetchUserData() {
             try {
-                const data = await getUser(userId); // Get user data by ID
+                const data = await getUser(userId); // get user data
                 console.log(data); // Log for debugging
-                setUserData(data); // Set the fetched data
+                setUserData(data);
                 setOriginalData(data); 
             } catch (err) {
                 setError("Failed to fetch user data");
-                console.error(err); // Log error for debugging
+                console.error(err);
             }
         }
         loadUserData();
         fetchUserData();
-    }, []); // Empty dependency array means this runs once when the component mounts
+    }, []);
 
-    // Handle error
     if (error) {
         return <div>Error: {error}</div>;
     }
 
-    // Handle loading state
     if (!userData) {
         return <div>Loading...</div>;
     }
 
     // Function to handle saving updated data (for now, this is a placeholder)
     const handleSave = () => {
-        // Logic to save the updated user data
-        // console.log("Saving updated user data:", userData);
+        // Save the updated user data
         updateUser(userData._id, userData); // updates info in database
-        setView1(0); // Return to profile view after saving
+        setView1(0); // return to profile view
     };
 
     // Function to handle input changes
@@ -59,15 +56,12 @@ export function Profile() {
         setUserData({ ...userData, [name]: value }); // updates userData, not database
     };
 
+    // called when Cancel button is pressed to edit profile page
+    // deletes all edits
     const handleCancel = () => {
-        setUserData(originalData); // Reset userData to the original data
-        setView1(0); // Return to profile view
+        setUserData(originalData); // reset userData to the original data
+        setView1(0); // return to profile view
     };
-
-
-    
-
-    
 
     return (
         <>
@@ -79,7 +73,7 @@ export function Profile() {
                     </div>
                     <div className="profile-details">
                         <img
-                            src={userData.profilePicture || "/default-profile.png"} // Fallback if profilePicture is null
+                            src={userData.profilePicture || "/default-profile.png"} 
                             alt={`${userData.firstName} ${userData.lastName}'s profile`}
                             className="profile-image"
                         />

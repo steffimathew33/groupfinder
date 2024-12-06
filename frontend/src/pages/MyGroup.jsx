@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 
 export function MyGroup() {
     const [group, setGroup] = useState(null); // State to store group data
-    const [error, setError] = useState(null); // State to handle any error
+    const [error, setError] = useState(null); 
     const [members, setMembers] = useState([]);
     useEffect(() => {
         async function loadUserGroup() {
@@ -17,9 +17,9 @@ export function MyGroup() {
 
                 if (groupId != null) {
                     try {
-                        // Fetch the group data based on groupId
+                        // Fetch group data based on ID
                         const groupData = await getGroup(groupId);
-                        setGroup(groupData); // Set the fetched group data
+                        setGroup(groupData); // Set fetched group data
 
                         const memberDetails = await Promise.all(
                             groupData.members.map(async (memberId) => {
@@ -33,14 +33,13 @@ export function MyGroup() {
                         setError("Failed to fetch group data");
                     }
                 } else {
-                    setGroup("No Group"); // If user is not in a group, set the state to "No Group"
+                    setGroup("No Group"); // If user is not in a group, set state to "No Group"
                 }
             }
         }
         loadUserGroup();
     }, []); // Empty dependency array ensures this runs only once when the component mounts
 
-    // Show loading message while group data is being fetched
     if (error) {
         return <div>Error: {error}</div>;
     }
@@ -53,13 +52,13 @@ export function MyGroup() {
         setMembers(member);
     }
 
-    const membersCount = group.members?.length || 0; // Fallback to 0 if undefined
-    const membersNeeded = group.maxPeople - membersCount || 0; // Fallback to 0 if undefined
+    const membersCount = group.members?.length || 0; 
+    const membersNeeded = group.maxPeople - membersCount || 0; 
 
     return (
         <div className="my-group">
             <h1 style={{ textDecoration: 'underline'}}> My Group</h1>
-            <h2>{group.groupName || "No Group"}</h2> {/* Display the group name */}
+            <h2>{group.groupName || "No Group"}</h2> {}
             <h3>Group Size: {group.maxPeople}</h3>
             <h4>
                 Current Members: {membersCount} 
@@ -68,7 +67,7 @@ export function MyGroup() {
             </h4>
             
             <div className="group-info">
-                <p>Group Description: {group.description || "" }</p>  {/*Display group description */}
+                <p>Group Description: {group.description || "" }</p>  {}
                 <p>Project Name: {group.projectTitle || "Untitled"}</p>
             </div>
             

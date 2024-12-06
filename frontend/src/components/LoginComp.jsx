@@ -23,7 +23,7 @@ export function LoginUser() {
             sessionStorage.setItem("User", response); //Set user = jsonwebtoken in session storage (found in Inspect element
             //Add a default Authorization field to every axios request made to backend
             //Once this is set, every request made by Axios will automatically include this token in the Authorization header
-            axios.defaults.headers.common["Authorization"] = `Bearer ${response}` //Bearer is a formatting norm.
+            axios.defaults.headers.common["Authorization"] = `Bearer ${response}` 
             navigate("/home");
 
         } else {
