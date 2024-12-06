@@ -96,7 +96,7 @@ userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            inGroup: new ObjectId(request.body.group)
+            inGroup: new ObjectId(request.body.inGroup)
         }
     }
     let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)

@@ -60,7 +60,7 @@ groupRoutes.route("/groups").post(async(request, response) => {
     try {
         let data = await db.collection("groups").insertOne(mongoObj);
 
-        response.status(200).json({message: "Group created successfully", data});
+        response.status(200).json({message: "Group created successfully", groupId: data.insertedId });
     } catch (error) {
         // Handle database or other errors
         console.error("Error creating group:", error);

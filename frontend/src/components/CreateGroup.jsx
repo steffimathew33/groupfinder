@@ -58,7 +58,7 @@ export function CreateGroup() {
         if (response.status !== 200) {
             alert("Account could not be created.");
         }
-        const groupId = response.data._id;
+        const groupId = response.groupId;
         console.log(groupId);
         const updatedUser = {
             ...userData,
