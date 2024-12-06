@@ -24,10 +24,15 @@ export function RequestsList() {
                     let groupsData = [];
                     let recipientsData = [];
                     // Using a for loop to fetch user data for each senderId
+                    
                     for (const req of filteredRequests) {
+                        console.log(req.senderId, req.groupId, req.recipientUserId);
                         const user = await getUser(req.senderId);
-                        const group = await getGroup(req.groupId);
                         const recip = await getUser(req.recipientUserId);
+                        console.log(user);
+                        console.log(recip)
+                        const group = await getGroup(req.groupId);
+                        
                         usersData.push({
                             senderId: req.senderId,
                             userName: `${user.firstName} ${user.lastName}`

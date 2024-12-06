@@ -119,6 +119,7 @@ export async function getAllGroups() {
 
 export async function getGroup(id) {
     const response = await axios.get(`${URL}/groups/${id}`)
+    console.log(response)
 
     if (response.status === 200) {
         return response.data

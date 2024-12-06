@@ -23,18 +23,23 @@ groupRoutes.route("/groups").get(verifyToken, async(request, response) => {
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
 groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
-    let db = database.getDb()
-    //findOne returns an object, not a Cursor
-    let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
+    try {
+        let db = database.getDb()
+        //findOne returns an object, not a Cursor
+        let d = new ObjectId(request.params.id);
+        console.log(d);
+        let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
+        console.log(data);
 
-    //Checking how many properties (keys) are in the data object returned from findOne
-    if (Object.keys(data).length > 0) {
-        response.json(data);
-    } else {
-        throw new Error("Data is an empty array.");
+        if (data) {
+            response.json(data);
+        } else {
+            throw new Error("Data is an empty array.");
+        }
+    } catch (error) {
+        console.log("FUCK")
     }
-})
-
+});
 //#3 Create one
 groupRoutes.route("/groups").post(async(request, response) => {
     let db = database.getDb()
