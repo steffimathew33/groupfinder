@@ -3,7 +3,7 @@ import { leaveGroup } from "../api";
 import { jwtDecode } from "jwt-decode";
 
 export function LeaveGroupButton() {
-    const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);  // To manage the loading state
   const [error, setError] = useState(null);  // To handle errors
   
@@ -12,7 +12,7 @@ export function LeaveGroupButton() {
     setError(null);
 
     try {
-      const response = leaveGroup(userData._id, userData.inGroup);
+      const response = await leaveGroup(userData._id, userData.inGroup);
       if (response.status === 200) {
         alert("You have successfully left the group.");
       }
