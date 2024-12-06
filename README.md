@@ -12,9 +12,6 @@ git clone https://github.com/steffimathew33/groupfinder.git
 Download Node.js from this link: https://nodejs.org/en/download/prebuilt-installer.
 
 
-??????????????? insert more instructions here regarding installation. npm install to install node modules? idk what i am missing
-
-
 Navigate to the backend folder and install the necessary node modules.
 ```bash
 cd backend
@@ -28,11 +25,13 @@ cd frontend
 npm install
 ```
 
-You will also need a ___? to access the information from the server. 
-Navigate to your backend folder and create a file called config.env
-```bash
-cd backend
-echo "____ GET THIS FROM KATIE____" > config.env
+To access information from the server, you will also need an authentication key. 
+Navigate to your backend folder and create a file called config.env.
+Inside config.env, enter this:
+
+```
+ATLAS_URI=mongodb+srv://public:12345@groupfinderdb.97hq3.mongodb.net/?retryWrites=true&w=majority&appName=GroupFinderDB
+SECRETKEY=supersecretkeythatcannotbeguessedbyanyone
 ```
 
 

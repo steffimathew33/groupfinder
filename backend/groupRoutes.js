@@ -23,18 +23,21 @@ groupRoutes.route("/groups").get(verifyToken, async(request, response) => {
 //#2 Retrieve One
 //:id is replaced with whatever number id it is. like a variable
 groupRoutes.route("/groups/:id").get(verifyToken, async(request, response) => {
-    let db = database.getDb()
-    //findOne returns an object, not a Cursor
-    let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
+    try {
+        let db = database.getDb()
+        //findOne returns an object, not a Cursor
+        let d = new ObjectId(request.params.id);
+        let data = await db.collection("groups").findOne({_id: new ObjectId(request.params.id)})
 
-    //Checking how many properties (keys) are in the data object returned from findOne
-    if (Object.keys(data).length > 0) {
-        response.json(data);
-    } else {
-        throw new Error("Data is an empty array.");
+        if (data) {
+            response.json(data);
+        } else {
+            throw new Error("Data is an empty array.");
+        }
+    } catch (error) {
+        console.log("Something went wrong with retrieving a group.")
     }
-})
-
+});
 //#3 Create one
 groupRoutes.route("/groups").post(async(request, response) => {
     let db = database.getDb()
@@ -55,7 +58,7 @@ groupRoutes.route("/groups").post(async(request, response) => {
     try {
         let data = await db.collection("groups").insertOne(mongoObj);
 
-        response.status(200).json({message: "Group created successfully", data});
+        response.status(200).json({message: "Group created successfully", groupId: data.insertedId });
     } catch (error) {
         // Handle database or other errors
         console.error("Error creating group:", error);
@@ -163,7 +166,6 @@ groupRoutes.route("/groups/:groupId/sendRequest").post(async (request, response)
         return response.status(404).json({ message: "User not found" });
     }
 
-    // Create a new request document
     const requestDoc = {
         groupId: new ObjectId(groupId),
         senderId: new ObjectId(request.body.senderId),  // The user who is sending the invite (e.g., group creator)

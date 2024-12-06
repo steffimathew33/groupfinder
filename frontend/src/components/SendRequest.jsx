@@ -4,10 +4,10 @@ import { jwtDecode } from "jwt-decode";
 
 
 export function SendRequestButton() {
-    const groupId = "674d5f6069ebe36c9ed63429"; //Cooked
+    const groupId = null;
 
     const [requestData, setRequestData] = useState({
-        recipientUserId: "674fa4578d450f3f2cc7486d", //Steffi
+        recipientUserId: null,
         senderId: null, 
     });
 
@@ -26,10 +26,10 @@ export function SendRequestButton() {
     const sendRequest = async () => {
         try {
             const response = await sendGroupRequest(groupId, requestData)
-            alert(response.data.message); // Display success message
+            alert(response.data.message);
         } catch (error) {
             console.error(error);
-            alert(error.response?.data?.message || "An error occurred"); // Handle errors
+            alert(error.response?.data?.message || "An error occurred");
         }
     };
 

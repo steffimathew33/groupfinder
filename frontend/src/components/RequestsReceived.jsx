@@ -24,10 +24,13 @@ export function RequestsList() {
                     let groupsData = [];
                     let recipientsData = [];
                     // Using a for loop to fetch user data for each senderId
+                    
                     for (const req of filteredRequests) {
+                        console.log(req.senderId, req.groupId, req.recipientUserId);
                         const user = await getUser(req.senderId);
-                        const group = await getGroup(req.groupId);
                         const recip = await getUser(req.recipientUserId);
+                        const group = await getGroup(req.groupId);
+                        
                         usersData.push({
                             senderId: req.senderId,
                             userName: `${user.firstName} ${user.lastName}`
@@ -87,7 +90,6 @@ export function RequestsList() {
         // Delete the request after successful acceptance
         try {
             const deleteResponse = await deleteRequest(requestId);
-            console.log(deleteResponse.message);
             setRequests((prevRequests) => prevRequests.filter((req) => req._id !== requestId)); //Remove the current request from the UI
         } catch (deleteError) {
             console.error("Error deleting the request:", deleteError.message);
