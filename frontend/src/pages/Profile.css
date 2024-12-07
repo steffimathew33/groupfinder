@@ -24,7 +24,7 @@ html, body {
 }
 
 .profile-details {
-    background-color: #FFFFFF; /* White background for the profile */
+    background-color: #FFFFFF;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -41,19 +41,19 @@ html, body {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #2774AE; /* Blue border around the image */
+    border: 4px solid #2774AE; 
 }
 
 
 /* Navigation Bar */
 .navbar .navItem {
-    text-decoration: none; /* Remove underline if any */
-    display: inline-block; /* Ensure links behave like blocks for styling */
-    border: 1px solid transparent; /* Avoid any default border */
+    text-decoration: none; 
+    display: inline-block; 
+    border: 1px solid transparent; 
 }
 
 .navbar-container {
-    background-color: #2774AE; /* Darker blue for hover effect */
+    background-color: #2774AE;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -123,7 +123,6 @@ html, body {
     margin-bottom: 60px;
 }
 
-/* Container for the form */
 .edit-profile-container {
     width: 400px;
     margin: 0 auto;
@@ -136,7 +135,6 @@ html, body {
     margin-top: 100px;
 }
 
-/* Form fields styling */
 .edit-profile-form label {
     display: block;
     font-size: 14px;
@@ -146,19 +144,17 @@ html, body {
     text-align: left;
 }
 
-/* Input fields and textareas */
 .edit-profile-form input,
 .edit-profile-form textarea {
-    width: 90%; /* Makes input fields fit nicely */
+    width: 90%; 
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* Prevents padding from affecting total width */
+    box-sizing: border-box;
     font-size: 14px;
 }
 
-/* Button styling */
 .edit-profile-buttons {
     margin-top: 20px;
 }
@@ -177,7 +173,6 @@ html, body {
     background-color: #0056b3;
 }
 
-/* Focus effect on inputs */
 .edit-profile-form input:focus,
 .edit-profile-form textarea:focus {
     outline: none;

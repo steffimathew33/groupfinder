@@ -94,6 +94,16 @@ export async function searchUser(search) {
     }
 }
 
+export async function getRandomUser() {
+    try {
+        const response = await axios.get(`${URL}/getuser`);
+        return response.data;
+    } catch (error) {
+        const errorMessage = error.response?.data?.message || error.message || "An unexpected error occurred";
+        alert(`Error: ${errorMessage}`);
+    }
+}
+
 
 // GROUP FUNCTIONALITY
 
@@ -109,6 +119,7 @@ export async function getAllGroups() {
 
 export async function getGroup(id) {
     const response = await axios.get(`${URL}/groups/${id}`)
+    console.log(response)
 
     if (response.status === 200) {
         return response.data
@@ -135,7 +146,7 @@ export async function updateGroup(id, updatedGroup) {
 }
 
 export async function leaveGroup(userId, groupId) {
-    const response = await axios.put(`${URL}/leavegroup`, userId, groupId);
+    const response = await axios.put(`${URL}/leavegroup`, {userId, groupId});
     return response;
 }
 

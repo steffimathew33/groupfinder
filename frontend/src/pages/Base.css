@@ -1,15 +1,14 @@
-/* Base Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #8BB8E8; /* Light blue background */
-    color: #000000; /* Black text */
+    background-color: #8BB8E8;
+    color: #000000;
 }
 
 button {
-    background-color: #FFD100; /* Golden button */
-    color: #000000; /* Black text */
+    background-color: #FFD100;
+    color: #000000;
     border: none;
     padding: 10px 20px;
     font-size: 1rem;
@@ -19,24 +18,24 @@ button {
 }
 
 button:hover {
-    background-color: #DAEBFE; /* Light blue hover effect */
+    background-color: #DAEBFE;
 }
 
 h1 {
     font-size: 2.5rem;
-    color: #003B5C; /* Dark blue */
+    color: #003B5C;
     margin-bottom: 20px;
     font-weight: 700;
 }
 
 h2 {
     font-size: 1.8rem;
-    color: #003B5C; /* Dark blue text for the name */
+    color: #003B5C;
     margin-bottom: 10px;
 }
 
 p {
     font-size: 1.1rem;
-    color: #555; /* Slightly dark gray for text */
+    color: #555;
     margin: 5px 0;
 }

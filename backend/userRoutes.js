@@ -96,7 +96,7 @@ userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
             gradYear: request.body.gradYear,
             profilePicture: request.body.profilePicture,
             bio: request.body.bio,
-            inGroup: new ObjectId(request.body.group)
+            inGroup: new ObjectId(request.body.inGroup)
         }
     }
     let data = await db.collection("users").updateOne({_id: new ObjectId(request.params.id)}, mongoObj)
@@ -190,6 +190,24 @@ userRoutes.route("/usersearch").get(async (request, response) => {
     } catch (error) {
         response.status(500).json({ error: error.message });
     }
+});
+
+userRoutes.route("/getuser").get(async (request, response) => {
+
+    try {
+        let db = database.getDb();
+        let data = await db.collection("users").aggregate([{$match: { inGroup: null }},{ $sample: { size: 1 } }]).toArray();
+        data = data[0];
+
+        if (data) {
+            response.json(data);
+        } else {
+            response.status(404).json({ message: "No users found matching the criteria." });
+        }
+    } catch (error) {
+        response.status(500).json({ error: error.message });
+    }
+
 });
 
 module.exports = userRoutes;
