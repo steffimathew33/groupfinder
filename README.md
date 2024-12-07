@@ -57,6 +57,9 @@ Answer with `Y`
 
 And there you go! Your server and your app should be running on two different ports. You can view the website in your browser at http://localhost:3001.
 
+## Note
+Make sure to run these instructions on eduroam wifi to avoid authentication issues with the server.
+
 ## About
 We created this app to help future CS35L students find a group for their project (as this is something that we all struggled with at the beginning of the quarter)! We hope this helps you find your future project members :)
 
