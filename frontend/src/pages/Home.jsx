@@ -87,7 +87,6 @@ export function Home() {
                 </div>
             ) : (
                 <div className="home-page-container2">
-                    <RequestsList />       {/* Show the list of requests */}
                     <SendRequestButton />  {/* Show button to send requests */}
                 </div>
             )}

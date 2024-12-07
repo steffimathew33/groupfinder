@@ -105,6 +105,43 @@ userRoutes.route("/users/:id").put(verifyToken, async(request, response) => {
     
 })
 
+userRoutes.route("/users/:id/leaveGroup").put(verifyToken, async(request, response) => {
+    let db = database.getDb()
+
+    // The group ID the user is leaving (assuming `request.body.group` contains the group ID)
+    let groupId = request.body.group;
+    if (!groupId) {
+        return response.status(400).json({ message: "Group ID is required." });
+    }
+
+    // Prepare the MongoDB update operation to remove the group's reference from the user
+    let mongoObj = {
+        $unset: {
+            inGroup: ""  // Remove the reference to the group
+        }
+    };
+
+    try {
+        // Update the user document by unsetting the `inGroup` field
+        let data = await db.collection("users").updateOne(
+            { _id: new ObjectId(request.params.id) }, // Find the user by ID
+            mongoObj
+        );
+
+        if (data.modifiedCount === 0) {
+            return response.status(404).json({ message: "User not found or no changes made." });
+        }
+
+        // Optionally, if you want to update other fields based on business logic, like updating group size in the group document, you can add that logic here.
+
+        response.json({ message: "User successfully removed from the group." });
+    } catch (error) {
+        console.error("Error removing group from user:", error);
+        response.status(500).json({ message: "Internal server error." });
+    }
+});
+
+
 //#5 Delete One
 userRoutes.route("/users/:id").delete(verifyToken, async(request, response) => {
     let db = database.getDb()

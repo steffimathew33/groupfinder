@@ -145,6 +145,11 @@ export async function updateGroup(id, updatedGroup) {
     return response
 }
 
+export async function leaveGroup(userId, groupId) {
+    const response = await axios.put(`${URL}/leavegroup`, {userId, groupId});
+    return response;
+}
+
 
 //REQUEST FUNCTIONALITY
 

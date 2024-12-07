@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { getUser } from "../api"; 
 import { updateUser } from "../api"
 import { jwtDecode } from "jwt-decode";
+import { SearchBar } from '../components/SearchBar';
 
 export function Profile() {
     const [userData, setUserData] = useState(null); // local user data
@@ -87,6 +88,7 @@ export function Profile() {
                     <div className="edit-profile-button">
                         <button onClick={() => setView1(1)}>Edit Profile</button>
                     </div>
+                    <SearchBar />
                 </div>
             ) : (
                 <div className="edit-profile-container">

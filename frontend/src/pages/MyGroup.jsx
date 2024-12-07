@@ -1,16 +1,33 @@
 import './MyGroup.css';
-import { getUser} from "../api"
+import { getUser } from "../api";
 import { getGroup } from "../api";
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { Link } from 'react-router-dom';  // Import Link for navigation
+import LeaveGroupButton from '../components/LeaveGroup';
 
 export function MyGroup() {
     const [group, setGroup] = useState(null); // State to store group data
     const [error, setError] = useState(null); 
     const [members, setMembers] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    // Get token and decode user information
+    const token = sessionStorage.getItem("User");
+    const decodedUser = jwtDecode(token);
+
+    const currentGroupId = decodedUser.inGroup;  // Assuming the group ID is in 'inGroup'
+    const userId = decodedUser._id;  // Assuming _id is the user ID in the token
+
+    // Success handler when user leaves the group
+    const onLeaveSuccess = () => {
+        // Handle the success case here, like updating the UI
+        setGroup(null); // You can reset the group data or show a success message
+    };
+
+    // Fetch group and member data
     useEffect(() => {
         async function loadUserGroup() {
-            const token = sessionStorage.getItem("User");
             if (token) {
                 const decodedUser = jwtDecode(token);
                 const groupId = decodedUser.inGroup;
@@ -26,7 +43,7 @@ export function MyGroup() {
                                 const memberData = await getUser(memberId);
                                 return memberData;
                             })
-                        )
+                        );
                         setMembers(memberDetails); 
                     } catch (err) {
                         console.error("Error fetching group data:", err);
@@ -38,7 +55,40 @@ export function MyGroup() {
             }
         }
         loadUserGroup();
-    }, []); // Empty dependency array ensures this runs only once when the component mounts
+    }, [token]); // Empty dependency array ensures this runs only once when the component mounts
+
+    // Handle leaving the group
+    const handleLeaveGroup = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await fetch(`/users/${userId}/leaveGroup`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`  // Assuming token is in localStorage
+                },
+                body: JSON.stringify({ group: currentGroupId })
+            });
+
+            if (!response.ok) {
+                // If the response is not ok, log it and show an error
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                throw new Error('Failed to leave group');
+            }
+
+            const data = await response.json();  // Only parse JSON if the response is okay
+            // Handle success
+            onLeaveSuccess();
+            alert('You have successfully left the group.');
+        } catch (error) {
+            setError(error.message || 'An unexpected error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -71,19 +121,30 @@ export function MyGroup() {
                 <p>Project Name: {group.projectTitle || "Untitled"}</p>
             </div>
             
-            <h5> Members</h5>
+            <h5>Members</h5>
             <div className='members-list'>
-            {members.map((member, index) => (
+                {members.map((member, index) => (
                     <div key={index} className="member-card">
-                        <button className="peopleButton"onClick={() => handleClick(member)}>
-                            {member.firstName} {member.lastName}
-                        </button>
+                        {/* Wrap the button with a Link component */}
+                        <Link to={`/profile/${member._id}`} className="link-button">
+                            <button className="peopleButton">
+                                {member.firstName} {member.lastName}
+                            </button>
+                        </Link>
                     </div>
-                    
                 ))}
             </div>
+
+            {/* Pass the necessary props to LeaveGroupButton */}
+            {group !== "No Group" && (
+                <div className="leave-button">
+                    <LeaveGroupButton 
+                        userId={userId}  // Pass userId
+                        currentGroupId={currentGroupId}  // Pass currentGroupId
+                        onLeaveSuccess={onLeaveSuccess}  // Pass onLeaveSuccess callback
+                    />
+                </div>
+            )}
         </div>
-        
     );
 }
-

@@ -30,7 +30,7 @@ export function SearchBar() {
     };
 
     return (
-        <div>
+        <div className="search-input">
             <input 
                 type="text" 
                 value={query} 

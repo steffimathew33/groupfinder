@@ -89,6 +89,61 @@ groupRoutes.route("/groups/:id").put(verifyToken, async(request, response) => {
     
 })
 
+groupRoutes.route("/leavegroup").put(verifyToken, async(request, response) => {
+    let db = database.getDb()
+
+    // The user to be removed from the group (assuming `request.body.userId` contains the user's ID)
+    let userId = request.body.userId;
+    let groupId = request.body.groupId;
+    if (!userId) {
+        return response.status(400).json({ message: "User ID is required." });
+    }
+    if (!groupId) {
+        return response.status(400).json({ message: "Group ID is required." });
+    }
+
+    let userObj = {
+        $unset: {
+            inGroup: null  // Remove the reference to the group
+        }
+    };
+
+    // Prepare the MongoDB update operation
+    let mongoObj = {
+        $pull: {
+            members: userId // Remove the user from the members array
+        },
+        $set: {
+            isFull: false // You may want to set 'isFull' to false if someone leaves, depending on your logic
+        }
+    };
+
+    try {
+        // Update the group document by pulling the user from the `members` array
+        let data = await db.collection("groups").updateOne(
+            { _id: new ObjectId(request.body.groupId) }, // Find the group by ID
+            mongoObj
+        );
+
+        let data2 = await db.collection("users").updateOne({_id: new ObjectId(request.body.userId)}, userObj);
+
+        if (data.modifiedCount === 0) {
+            return response.status(404).json({ message: "Group not found or no changes made." });
+        }
+
+        if (data2.modifiedCount === 0) {
+            return response.status(404).json({ message: "User not found or no changes made." });
+        }
+
+        // Return the updated data as a response
+        response.json({ message: "User successfully removed from the group." });
+    } catch (error) {
+        console.error("Error removing user from group:", error);
+        response.status(500).json({ message: "Internal server error." });
+    }
+});
+
+
 //#5 Delete One
 //Because verifyToken is an argument, it will call that function first.
 groupRoutes.route("/groups/:id").delete(verifyToken, async(request, response) => {
@@ -145,7 +200,7 @@ groupRoutes.route("/groups/:groupId/acceptRequest").patch(async (request, respon
     }
 
     // Add the sender to the group's members
-    group.members.push(request.body.senderId);
+    group.members.push(request.body.recipientUserId); //THIS SHOULD BE RECIPIENTUSERID, WAS PREVIOSULY SENDERID
     group.currentMembers += 1;
 
     const isFull = group.members.length === group.maxPeople;

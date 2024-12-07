@@ -32,7 +32,7 @@
     font-size: 21px;
 }
 .my-group h4 {
-    margin-top: -10px;
+    margin-top: 25px;
     font-size: 20px;
 }
 .my-group h5 {
@@ -117,7 +117,25 @@
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
+/* If using Link component from react-router-dom */
+.link-button {
+    text-decoration: none;  /* Remove the default underline */
+    color: inherit;         /* Inherit the color from parent element */
+  }
+  
+
 /* leave button */
+.leave-button button {
+    background-color: red; /* Golden button */
+    color: #000000; /* Black text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px
+}
 
 
 
